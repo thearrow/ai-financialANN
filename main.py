@@ -1,10 +1,11 @@
-import csv
-import numpy
-import os.path
-import ystockquote
+import csv, numpy, os.path, ystockquote
+from pybrain.datasets import SupervisedDataSet
+from pybrain.tools.shortcuts import buildNetwork
+from pybrain.supervised.trainers import BackpropTrainer
 from matplotlib import pyplot
 from matplotlib import dates
 
+#Financial Data
 sp500filename = 'sp500.csv'
 nasdaqfilename = 'nasdaq.csv'
 startdate = '20100101' #YYYYMMDD
@@ -14,6 +15,14 @@ sp500max = 0
 nasdaqmean = 0
 nasdaqmax = 0
 
+#Neural Network
+INPUT = 15
+HIDDEN = 10
+OUTPUT = 5
+ITERATIONS = 40
+TRAINING = 300
+
+#fetch financial data from file or yahoo API
 def loadIndex(file):
     if os.path.isfile(file):
         return list(csv.reader(open(file,'rb'),delimiter=','))
@@ -28,7 +37,6 @@ def loadIndex(file):
             writer = csv.writer(f)
             writer.writerows(data)
         return data
-
 
 #data normalization functions {-1:1}
 def normalize(index, data):
