@@ -21,7 +21,7 @@ HIDDEN = 10
 OUTPUT = 1
 ITERATIONS = 50
 TRAINING = 400
-PREDICT = 300
+TESTING = 380
 
 #fetch financial data from file or yahoo API
 def load_index(file):
@@ -67,7 +67,7 @@ def un_normalize(index, data):
         mean = nasdaqmean
         max = nasdaqmax
     for i,val in enumerate(data):
-        data[i][-1] = (float(val[-1])*max)+mean
+        data[i] = (float(val)*max)+mean
 
 #Neural Net Functions
 def train(net, data):
@@ -88,7 +88,7 @@ def create_training_data(input):
 def get_output_vals(net, input):
     outputs = []
     count = TRAINING
-    while count+INPUT+OUTPUT < TRAINING+PREDICT:
+    while count+INPUT+OUTPUT < TRAINING+TESTING:
         ins = list(input[count:count+INPUT])
         outputs.append(net.activate(ins))
         count += OUTPUT
@@ -98,7 +98,7 @@ def get_output_vals(net, input):
     return list(itertools.chain(*realouts))
 
 def get_output_dates(input):
-    return list((dates.datestr2num(d[0]) for d in input[TRAINING+INPUT:TRAINING+PREDICT-OUTPUT]))
+    return list((dates.datestr2num(d[0]) for d in input[TRAINING+INPUT:TRAINING+TESTING-OUTPUT]))
 
 
 sp500 = load_index(sp500filename)
@@ -120,10 +120,13 @@ train(net,data)
 sp_predicted = get_output_vals(net, spvalues)
 print len(sp_predicted)
 print len(get_output_dates(sp500))
+un_normalize('sp500',spvalues)
+un_normalize('sp500',sp_predicted)
 
 pyplot.plot_date(spdates,spvalues,linestyle='solid',c='b',marker='None')
-pyplot.plot_date(nasdates,nasvalues,linestyle='solid',c='g',marker='None')
+#pyplot.plot_date(nasdates,nasvalues,linestyle='solid',c='g',marker='None')
 pyplot.plot_date(get_output_dates(sp500),sp_predicted,linestyle='solid',c='r',marker='None')
+pyplot.vlines(spdates[TRAINING+INPUT],1000,1600)
 
 
 pyplot.show()
