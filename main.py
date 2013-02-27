@@ -4,11 +4,12 @@ from pybrain.tools.shortcuts import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
 from matplotlib import pyplot
 from matplotlib import dates
+import matplotlib
 
 #Financial Data
 sp500filename = 'sp500.csv'
 nasdaqfilename = 'nasdaq.csv'
-startdate = '20100101' #YYYYMMDD
+startdate = '20060101' #YYYYMMDD
 enddate = '20130220' #YYYYMMDD
 sp500mean = 0
 sp500max = 0
@@ -16,12 +17,12 @@ nasdaqmean = 0
 nasdaqmax = 0
 
 #Neural Network
-INPUT = 15
+INPUT = 20
 HIDDEN = 10
-OUTPUT = 1
-ITERATIONS = 50
-TRAINING = 400
-TESTING = 380
+OUTPUT = 5
+ITERATIONS = 40
+TRAINING = 1200
+TESTING = 500
 
 #fetch financial data from file or yahoo API
 def load_index(file):
