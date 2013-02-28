@@ -4,12 +4,11 @@ from pybrain.tools.shortcuts import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
 from matplotlib import pyplot
 from matplotlib import dates
-import matplotlib
 
 #Financial Data
 sp500filename = 'sp500.csv'
 nasdaqfilename = 'nasdaq.csv'
-startdate = '20060101' #YYYYMMDD
+startdate = '20020101' #YYYYMMDD
 enddate = '20130220' #YYYYMMDD
 sp500mean = 0
 sp500max = 0
@@ -18,11 +17,12 @@ nasdaqmax = 0
 
 #Neural Network
 INPUT = 20
-HIDDEN = 10
-OUTPUT = 5
-ITERATIONS = 40
-TRAINING = 1200
+HIDDEN = 15
+OUTPUT = 1
+ITERATIONS = 20
+TRAINING = 2300
 TESTING = 500
+LRATE = 0.05
 
 #fetch financial data from file or yahoo API
 def load_index(file):
@@ -72,7 +72,7 @@ def un_normalize(index, data):
 
 #Neural Net Functions
 def train(net, data):
-    trainer = BackpropTrainer(net, data, learningrate=0.01, momentum=0.9, weightdecay=0.0001)
+    trainer = BackpropTrainer(net, data, learningrate=LRATE, momentum=0.9, weightdecay=0.0001)
     for _ in range(ITERATIONS):
         print trainer.train()
 
@@ -101,6 +101,9 @@ def get_output_vals(net, input):
 def get_output_dates(input):
     return list((dates.datestr2num(d[0]) for d in input[TRAINING+INPUT:TRAINING+TESTING-OUTPUT]))
 
+
+
+#Main program
 
 sp500 = load_index(sp500filename)
 normalize('sp500',sp500)
