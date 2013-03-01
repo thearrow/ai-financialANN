@@ -1,54 +1,20 @@
-import csv, numpy, os.path, itertools, ystockquote
+import itertools, numpy, datahandler as dh
 from pybrain.datasets import SupervisedDataSet
 from pybrain.tools.shortcuts import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
 from matplotlib import pyplot as pp
-from matplotlib import dates
-
-#Financial Data
-sp500filename = 'sp500.csv'
-startdate = '20020101' #YYYYMMDD
-enddate = '20130220' #YYYYMMDD
-sp500mean = 0
-sp500max = 0
 
 #Neural Network
 INPUT = 20
 HIDDEN = 15
 OUTPUT = 1
-ITERATIONS = 20
+ITERATIONS = 10
 TRAINING = 2000
 TESTING = 800
 LRATE = 0.05
+startdate = '20020101' #YYYYMMDD
+enddate = '20130220' #YYYYMMDD
 
-#fetch financial data from file or yahoo API
-def load_index(file):
-    if os.path.isfile(file):
-        data = list(csv.reader(open(file,'rb'),delimiter=','))
-        data.reverse()
-        return data
-    else:
-        data = ystockquote.get_historical_prices("%5EGSPC",startdate,enddate)
-        data.pop(0)
-        with open(file, 'wb') as f:
-            writer = csv.writer(f)
-            writer.writerows(data)
-        data.reverse()
-        return data
-
-#data normalization functions {-1:1}
-def normalize(data):
-    mean = numpy.mean(list(float(d[-1]) for d in data))
-    max = numpy.max(list(numpy.abs(float(d[-1])-mean) for d in data))
-    global sp500mean, sp500max
-    sp500mean = mean
-    sp500max = max
-    for i,val in enumerate(data):
-        data[i][-1] = (float(val[-1])-mean)/max
-
-def un_normalize(data):
-    for i,val in enumerate(data):
-        data[i] = (float(val)*sp500max)+sp500mean
 
 #Neural Net Functions
 def train(net, data):
@@ -80,34 +46,34 @@ def get_output_vals(net, input):
         realouts.append(list(d))
     return list(itertools.chain(*realouts))
 
-def get_output_dates(input):
-    return list((dates.datestr2num(d[0]) for d in input[TRAINING+INPUT:TRAINING+TESTING-OUTPUT]))
+def get_output_dates(dates):
+    return dates[TRAINING+INPUT:TRAINING+TESTING-OUTPUT]
 
 
 
 #Main program
 
-sp500 = load_index(sp500filename)
-normalize(sp500)
-spdates = list((dates.datestr2num(s[0]) for s in sp500))
-spvalues = list((s[-1] for s in sp500))
-
+#Recurrent:
+#net = buildNetwork(INPUT,HIDDEN,OUTPUT,bias=True,recurrent=True,hiddenclass=LSTMLayer)
+#Feed-Forward:
 net = buildNetwork(INPUT,HIDDEN,OUTPUT,bias=True)
 net.randomize()
+
+sp500 = dh.DataHandler("%5EGSPC",startdate,enddate)
+sp500.normalize()
+spdates = sp500.get_dates()
+spvalues = sp500.get_values()
 
 data = create_training_data(spvalues)
 errors = train(net,data)
 
 sp_predicted = get_output_vals(net, spvalues)
-un_normalize(spvalues)
-un_normalize(sp_predicted)
-
 
 
 #Configure plots
 pp.subplot(311)
 pp.plot_date(spdates,spvalues,linestyle='solid',c='b',marker='None')
-pp.plot_date(get_output_dates(sp500),sp_predicted,linestyle='solid',c='r',marker='None')
+pp.plot_date(get_output_dates(spdates),sp_predicted,linestyle='solid',c='r',marker='None')
 pp.vlines(spdates[TRAINING+INPUT],numpy.min(spvalues),numpy.max(spvalues))
 pp.xlabel("Date")
 pp.ylabel("S&P500 Points")
