@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f03a122-3330-4b63-aa1d-bf8a0411bf10" name="Default" comment="remove nasdaq and simplif">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/nasdaq.csv" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/oldmain.py" afterPath="" />
+    <list default="true" id="4f03a122-3330-4b63-aa1d-bf8a0411bf10" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AI-project.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/main.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362106169832" ignored="false" />
-    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362106293486" ignored="false" />
+    <file path="/main.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362107834983" ignored="false" />
+    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362106316815" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,7 +70,7 @@
       <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="100" column="45" selection-start="2816" selection-end="2816" vertical-scroll-proportion="1.0567515">
+            <state line="58" column="61" selection-start="1710" selection-end="1710" vertical-scroll-proportion="0.21135029">
               <folding>
                 <element signature="e#0#50#0" expanded="true" />
               </folding>
@@ -422,12 +420,16 @@
       <created>1362103341523</created>
       <updated>1362103341523</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="remove nasdaq and simplify">
+      <created>1362106321535</created>
+      <updated>1362106321535</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32793018" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -441,7 +443,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Debug with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26398852" sideWeight="0.67206985" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26398852" sideWeight="0.67206985" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3478803" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Regex" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -491,7 +493,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="not really what I wanted..." />
+    <option name="LAST_COMMIT_MESSAGE" value="remove nasdaq and simplify" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -510,6 +512,7 @@
     <MESSAGE value="change intellij settings" />
     <MESSAGE value="use neurolab for elman recurrent net" />
     <MESSAGE value="not really what I wanted..." />
+    <MESSAGE value="remove nasdaq and simplify" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -575,7 +578,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="100" column="45" selection-start="2816" selection-end="2816" vertical-scroll-proportion="1.0567515">
+        <state line="58" column="61" selection-start="1710" selection-end="1710" vertical-scroll-proportion="0.21135029">
           <folding>
             <element signature="e#0#50#0" expanded="true" />
           </folding>

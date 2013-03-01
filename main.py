@@ -2,7 +2,7 @@ import csv, numpy, os.path, itertools, ystockquote
 from pybrain.datasets import SupervisedDataSet
 from pybrain.tools.shortcuts import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
-from matplotlib import pyplot
+from matplotlib import pyplot as pp
 from matplotlib import dates
 
 #Financial Data
@@ -17,8 +17,8 @@ INPUT = 20
 HIDDEN = 15
 OUTPUT = 1
 ITERATIONS = 20
-TRAINING = 2300
-TESTING = 500
+TRAINING = 2000
+TESTING = 800
 LRATE = 0.05
 
 #fetch financial data from file or yahoo API
@@ -56,7 +56,7 @@ def train(net, data):
     #for _ in range(ITERATIONS):
     #    print trainer.train()
     print "Training..."
-    trainer.trainUntilConvergence(maxEpochs=ITERATIONS,verbose=True)
+    return trainer.trainUntilConvergence(maxEpochs=ITERATIONS)
 
 def create_training_data(input):
     data = SupervisedDataSet(INPUT,OUTPUT)
@@ -92,18 +92,33 @@ normalize(sp500)
 spdates = list((dates.datestr2num(s[0]) for s in sp500))
 spvalues = list((s[-1] for s in sp500))
 
-net = buildNetwork(INPUT,HIDDEN,OUTPUT)
+net = buildNetwork(INPUT,HIDDEN,OUTPUT,bias=True)
 net.randomize()
 
 data = create_training_data(spvalues)
-train(net,data)
+errors = train(net,data)
 
 sp_predicted = get_output_vals(net, spvalues)
 un_normalize(spvalues)
 un_normalize(sp_predicted)
 
-pyplot.plot_date(spdates,spvalues,linestyle='solid',c='b',marker='None')
-pyplot.plot_date(get_output_dates(sp500),sp_predicted,linestyle='solid',c='r',marker='None')
-pyplot.vlines(spdates[TRAINING+INPUT],1000,1600)
 
-pyplot.show()
+
+#Configure plots
+pp.subplot(311)
+pp.plot_date(spdates,spvalues,linestyle='solid',c='b',marker='None')
+pp.plot_date(get_output_dates(sp500),sp_predicted,linestyle='solid',c='r',marker='None')
+pp.vlines(spdates[TRAINING+INPUT],numpy.min(spvalues),numpy.max(spvalues))
+pp.xlabel("Date")
+pp.ylabel("S&P500 Points")
+pp.text(spdates[TRAINING+INPUT-350],numpy.max(spvalues)-50,'TRAINING')
+pp.text(spdates[TRAINING+INPUT+50],numpy.max(spvalues)-50,'PREDICTION')
+pp.grid(True)
+
+pp.subplot(313)
+pp.plot(numpy.reshape(errors[0],(len(errors[0]),1)))
+pp.xlabel("Epoch Number")
+pp.ylabel("Mean-Squared Error")
+pp.grid(True)
+
+pp.show()
