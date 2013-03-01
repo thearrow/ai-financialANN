@@ -59,10 +59,26 @@ def get_output_dates(dates):
 net = buildNetwork(INPUT,HIDDEN,OUTPUT,bias=True)
 net.randomize()
 
+#S&P 500
 sp500 = dh.DataHandler("%5EGSPC",startdate,enddate)
 sp500.normalize()
 spdates = sp500.get_dates()
 spvalues = sp500.get_values()
+
+#NASDAQ COMPOSITE INDEX
+nasdaq = dh.DataHandler("%5EIXIC",startdate,enddate)
+nasdaq.normalize()
+nasvals = nasdaq.get_values()
+
+#MAJOR MARKET INDEX
+tot = dh.DataHandler("%5EXMI",startdate,enddate)
+tot.normalize()
+totvals = tot.get_values()
+
+#NYSE COMPOSITE INDEX
+nyse = dh.DataHandler("%5ENYA",startdate,enddate)
+nyse.normalize()
+nysevals = nyse.get_values()
 
 data = create_training_data(spvalues)
 errors = train(net,data)
@@ -73,10 +89,13 @@ sp_predicted = get_output_vals(net, spvalues)
 #Configure plots
 pp.subplot(311)
 pp.plot_date(spdates,spvalues,linestyle='solid',c='b',marker='None')
+pp.plot_date(spdates[:TRAINING+INPUT],nasvals[:TRAINING+INPUT],linestyle='solid',c='g',marker='None')
+pp.plot_date(spdates[:TRAINING+INPUT],totvals[:TRAINING+INPUT],linestyle='solid',c='y',marker='None')
+pp.plot_date(spdates[:TRAINING+INPUT],nysevals[:TRAINING+INPUT],linestyle='solid',c='m',marker='None')
 pp.plot_date(get_output_dates(spdates),sp_predicted,linestyle='solid',c='r',marker='None')
 pp.vlines(spdates[TRAINING+INPUT],numpy.min(spvalues),numpy.max(spvalues))
 pp.xlabel("Date")
-pp.ylabel("S&P500 Points")
+pp.ylabel("Normalized Indices")
 pp.text(spdates[TRAINING+INPUT-350],numpy.max(spvalues)-50,'TRAINING')
 pp.text(spdates[TRAINING+INPUT+50],numpy.max(spvalues)-50,'PREDICTION')
 pp.grid(True)
