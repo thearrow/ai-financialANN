@@ -2,16 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f03a122-3330-4b63-aa1d-bf8a0411bf10" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/%5EIXIC.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/%5ENYA.csv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/%5EXMI.csv" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AI-project.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/main.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362113388776" ignored="false" />
-    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362112486242" ignored="false" />
+    <file path="/main.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362114787351" ignored="false" />
+    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362113450709" ignored="false" />
     <file path="/datahandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362111699995" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,7 +71,7 @@
       <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="66" column="38" selection-start="1773" selection-end="1773" vertical-scroll-proportion="0.15851273">
+            <state line="98" column="22" selection-start="2558" selection-end="2558" vertical-scroll-proportion="3.3463798">
               <folding>
                 <element signature="e#0#42#0" expanded="true" />
               </folding>
@@ -446,7 +443,11 @@
       <created>1362112489101</created>
       <updated>1362112489101</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="more data">
+      <created>1362113454160</created>
+      <updated>1362113454160</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -515,7 +516,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor out some of the data handling" />
+    <option name="LAST_COMMIT_MESSAGE" value="more data" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -537,6 +538,7 @@
     <MESSAGE value="remove nasdaq and simplify" />
     <MESSAGE value="fancy graphs" />
     <MESSAGE value="refactor out some of the data handling" />
+    <MESSAGE value="more data" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -611,7 +613,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="66" column="38" selection-start="1773" selection-end="1773" vertical-scroll-proportion="0.15851273">
+        <state line="98" column="22" selection-start="2558" selection-end="2558" vertical-scroll-proportion="3.3463798">
           <folding>
             <element signature="e#0#42#0" expanded="true" />
           </folding>

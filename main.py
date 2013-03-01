@@ -5,13 +5,14 @@ from pybrain.supervised.trainers import BackpropTrainer
 from matplotlib import pyplot as pp
 
 #Neural Network
-INPUT = 20
+INPUT = 25
 HIDDEN = 15
 OUTPUT = 1
 ITERATIONS = 10
 TRAINING = 2000
 TESTING = 800
-LRATE = 0.05
+LRATE = 0.01
+INDICES = 5
 startdate = '20020101' #YYYYMMDD
 enddate = '20130220' #YYYYMMDD
 
@@ -27,9 +28,11 @@ def train(net, data):
 def create_training_data(input):
     data = SupervisedDataSet(INPUT,OUTPUT)
     count = 0
-    while count+INPUT+OUTPUT < TRAINING:
-        ins = list(input[count:count+INPUT])
-        outs = input[count+INPUT+1:count+INPUT+OUTPUT+1]
+    while count+INPUT/INDICES+OUTPUT < TRAINING:
+        ins = []
+        for index in input:
+            ins.extend(index[count:count+INPUT/INDICES])
+        outs = input[0][count+INPUT+1:count+INPUT+OUTPUT+1]
         data.addSample(ins, outs)
         count += 1
     return data
@@ -37,8 +40,10 @@ def create_training_data(input):
 def get_output_vals(net, input):
     outputs = []
     count = TRAINING
-    while count+INPUT+OUTPUT < TRAINING+TESTING:
-        ins = list(input[count:count+INPUT])
+    while count+INPUT/INDICES+OUTPUT < TRAINING+TESTING:
+        ins = []
+        for index in input:
+            ins.extend(index[count:count+INPUT/INDICES])
         outputs.append(net.activate(ins))
         count += OUTPUT
     realouts = []
@@ -47,7 +52,7 @@ def get_output_vals(net, input):
     return list(itertools.chain(*realouts))
 
 def get_output_dates(dates):
-    return dates[TRAINING+INPUT:TRAINING+TESTING-OUTPUT]
+    return dates[TRAINING+INPUT/INDICES:TRAINING+TESTING-OUTPUT]
 
 
 
@@ -80,24 +85,33 @@ nyse = dh.DataHandler("%5ENYA",startdate,enddate)
 nyse.normalize()
 nysevals = nyse.get_values()
 
-data = create_training_data(spvalues)
+#GOLD/SILVER SECTOR
+gold = dh.DataHandler("%5EXAU",startdate,enddate)
+gold.normalize()
+goldvals = gold.get_values()
+
+vals = [spvalues,nasvals,totvals,nysevals,goldvals]
+
+data = create_training_data(vals)
 errors = train(net,data)
 
-sp_predicted = get_output_vals(net, spvalues)
+sp_predicted = get_output_vals(net, vals)
 
 
 #Configure plots
+ENDTRAINING = TRAINING+INPUT/INDICES
 pp.subplot(311)
 pp.plot_date(spdates,spvalues,linestyle='solid',c='b',marker='None')
-pp.plot_date(spdates[:TRAINING+INPUT],nasvals[:TRAINING+INPUT],linestyle='solid',c='g',marker='None')
-pp.plot_date(spdates[:TRAINING+INPUT],totvals[:TRAINING+INPUT],linestyle='solid',c='y',marker='None')
-pp.plot_date(spdates[:TRAINING+INPUT],nysevals[:TRAINING+INPUT],linestyle='solid',c='m',marker='None')
+pp.plot_date(spdates[:ENDTRAINING],nasvals[:ENDTRAINING],linestyle='solid',c='g',marker='None')
+pp.plot_date(spdates[:ENDTRAINING],totvals[:ENDTRAINING],linestyle='solid',c='c',marker='None')
+pp.plot_date(spdates[:ENDTRAINING],nysevals[:ENDTRAINING],linestyle='solid',c='m',marker='None')
+pp.plot_date(spdates[:ENDTRAINING],goldvals[:ENDTRAINING],linestyle='solid',c='y',marker='None')
 pp.plot_date(get_output_dates(spdates),sp_predicted,linestyle='solid',c='r',marker='None')
-pp.vlines(spdates[TRAINING+INPUT],numpy.min(spvalues),numpy.max(spvalues))
+pp.vlines(spdates[ENDTRAINING],numpy.min(spvalues),numpy.max(spvalues))
 pp.xlabel("Date")
 pp.ylabel("Normalized Indices")
-pp.text(spdates[TRAINING+INPUT-350],numpy.max(spvalues)-50,'TRAINING')
-pp.text(spdates[TRAINING+INPUT+50],numpy.max(spvalues)-50,'PREDICTION')
+pp.text(spdates[ENDTRAINING-350],numpy.max(spvalues)-50,'TRAINING')
+pp.text(spdates[ENDTRAINING+50],numpy.max(spvalues)-50,'PREDICTION')
 pp.grid(True)
 
 pp.subplot(313)
