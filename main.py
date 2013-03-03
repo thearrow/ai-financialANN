@@ -71,7 +71,7 @@ def get_output_dates(dates):
 def absolute_errors(output, target):
     errors = []
     for i in range(0,len(output)):
-        errors.append((100.0/len(output))*(abs(target[i]-output[i]))/target[i])
+        errors.append((abs(target[i]-output[i]))/target[i])
     return errors
 
 
@@ -140,7 +140,7 @@ sp_predicted = get_output_vals(net, aggregated_input)
 val = Validator()
 pred_errors = absolute_errors(sp_predicted,spvalues[TRAINING+DAYS+OUTPUT:TRAINING+TESTING])
 mse = val.MSE(sp_predicted,spvalues[TRAINING+DAYS+OUTPUT:TRAINING+TESTING])
-mape = numpy.sum(pred_errors)
+mape = (100.0/len(pred_errors))*numpy.sum(pred_errors)
 
 #Configure plots
 ENDTRAINING = TRAINING+DAYS
