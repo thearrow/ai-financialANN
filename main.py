@@ -1,7 +1,7 @@
 import itertools, numpy, datahandler as dh
 from pybrain.datasets import SupervisedDataSet
-from pybrain.tools.shortcuts import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
+from pybrain.structure import SigmoidLayer, LinearLayer, FullConnection, FeedForwardNetwork, BiasUnit
 from pybrain.tools.validation import Validator
 from matplotlib import pyplot as pp
 
@@ -17,7 +17,7 @@ HIDDEN = 40
 OUTPUT = 1
 
 #Training
-ITERATIONS = 30
+ITERATIONS = 10
 TRAINING = 2200
 TESTING = 609
 LRATE = 0.01
@@ -70,31 +70,49 @@ def absolute_error(output, target):
 
 #Main program
 
-#Recurrent:
-#net = buildNetwork(INPUT,HIDDEN,OUTPUT,bias=True,recurrent=True,hiddenclass=LSTMLayer)
+def assembleNetwork():
+    n = FeedForwardNetwork()
+    n.addInputModule(LinearLayer(INPUT,name="in"))
+    n.addModule(SigmoidLayer(HIDDEN/4,name="h1"))
+    n.addModule(SigmoidLayer(HIDDEN/4,name="h2"))
+    n.addModule(LinearLayer(HIDDEN/4,name="h3"))
+    n.addModule(LinearLayer(HIDDEN/4,name="h4"))
+    n.addModule(BiasUnit(name="b1"))
+    n.addModule(BiasUnit(name="b2"))
+    n.addOutputModule(SigmoidLayer(OUTPUT,name="out"))
+
+    n.addConnection(FullConnection(n['in'],n['h1']))
+    n.addConnection(FullConnection(n['in'],n['h3']))
+    n.addConnection(FullConnection(n['h1'],n['h2']))
+    n.addConnection(FullConnection(n['h3'],n['h4']))
+    n.addConnection(FullConnection(n['h4'],n['out']))
+    n.addConnection(FullConnection(n['h2'],n['out']))
+    n.addConnection(FullConnection(n['b1'],n['h2']))
+    n.addConnection(FullConnection(n['b2'],n['h4']))
+    n.sortModules()
+    n = n.convertToFastNetwork()
+
+    return n
+
 #Feed-Forward:
-net = buildNetwork(INPUT,HIDDEN,OUTPUT,bias=True)
+net = assembleNetwork()
 net.randomize()
 
 #S&P 500
 sp500 = dh.DataHandler("%5EGSPC",startdate,enddate)
-sp500.normalize()
 spdates = sp500.get_dates()
 spvalues = sp500.get_values()
 
 #NASDAQ COMPOSITE INDEX
 nasdaq = dh.DataHandler("%5EIXIC",startdate,enddate)
-nasdaq.normalize()
 nasvals = nasdaq.get_values()
 
 #MAJOR MARKET INDEX
 tot = dh.DataHandler("%5EXMI",startdate,enddate)
-tot.normalize()
 totvals = tot.get_values()
 
 #NYSE COMPOSITE INDEX
 nyse = dh.DataHandler("%5ENYA",startdate,enddate)
-nyse.normalize()
 nysevals = nyse.get_values()
 
 vals = [spvalues,nasvals,totvals,nysevals]
@@ -119,14 +137,14 @@ pp.plot_date(get_output_dates(spdates),sp_predicted,linestyle='solid',c='r',mark
 pp.vlines(spdates[ENDTRAINING],numpy.min(spvalues),numpy.max(spvalues))
 pp.xlabel("Date")
 pp.ylabel("Normalized Indices")
-pp.text(spdates[ENDTRAINING-350],numpy.max(spvalues)-50,'TRAINING')
-pp.text(spdates[ENDTRAINING+50],numpy.max(spvalues)-50,'PREDICTION')
+pp.text(spdates[ENDTRAINING-350],numpy.max(spvalues)*.9,'TRAINING')
+pp.text(spdates[ENDTRAINING+50],numpy.max(spvalues)*.9,'PREDICTION')
 pp.grid(True)
 
 pp.subplot(313)
 pp.plot(numpy.reshape(errors[0],(len(errors[0]),1)))
 pp.xlabel("Epoch Number")
-pp.ylabel("Mean-Squared Error")
+pp.ylabel("MSE")
 pp.grid(True)
 
 pp.show()

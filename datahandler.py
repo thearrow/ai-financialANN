@@ -38,6 +38,7 @@ class DataHandler():
             self.data = data
         self.values = list((float(s[-1]) for s in self.data))
         self.dates = list((dates.datestr2num(s[0]) for s in self.data))
+        self.normalize()
 
     #data normalization functions {0.1:0.9}
     def normalize(self):
