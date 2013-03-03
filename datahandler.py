@@ -10,10 +10,12 @@ class DataHandler():
     ticker = ''
     startdate = ''
     enddate = ''
-    scaler = MinMaxScaler(feature_range=(0,1),copy=False)
+    price_scaler = MinMaxScaler(feature_range=(0,1),copy=False)
+    change_scaler = MinMaxScaler(feature_range=(0,1),copy=False)
     data = []
     dates = []
     values = []
+    changes = []
 
     def __init__(self, ticker, start, end):
         self.ticker = ticker
@@ -38,17 +40,27 @@ class DataHandler():
             self.data = data
         self.values = list((float(s[-1]) for s in self.data))
         self.dates = list((dates.datestr2num(s[0]) for s in self.data))
-        self.normalize()
+        self.changes = self.createChanges()
+        self.changes = self.normalize(self.changes, self.change_scaler)
+        self.values = self.normalize(self.values, self.price_scaler)
 
-    #data normalization functions {0.1:0.9}
-    def normalize(self):
-        self.values = numpy.reshape(numpy.array(self.values),(len(self.values),1))
-        self.scaler.fit_transform(self.values)
-        self.values = list(numpy.reshape(self.values,(1,len(self.values))).flatten())
+    def createChanges(self):
+        changes = [0]
+        #remaining changes
+        for i in range(1,len(self.values)):
+             changes.append(self.values[i]-self.values[i-1])
+        return changes
 
+    #data normalization (0,1)
+    def normalize(self, input, scaler):
+        data = numpy.reshape(numpy.array(input),(len(input),1))
+        scaler.fit_transform(data)
+        return list(numpy.reshape(data,(1,len(data))).flatten())
+
+    #not completed
     def un_normalize(self):
         self.values = numpy.reshape(numpy.array(self.values),(len(self.values),1))
-        self.scaler.inverse_transform(self.values)
+        #self.scaler.inverse_transform(self.values)
         self.values = list(numpy.reshape(self.values,(1,len(self.values))).flatten())
 
     def get_dates(self):
@@ -56,3 +68,6 @@ class DataHandler():
 
     def get_values(self):
         return self.values
+
+    def get_changes(self):
+        return self.changes
