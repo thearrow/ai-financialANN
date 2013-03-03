@@ -12,10 +12,12 @@ class DataHandler():
     enddate = ''
     price_scaler = MinMaxScaler(feature_range=(0,1),copy=False)
     change_scaler = MinMaxScaler(feature_range=(0,1),copy=False)
+    change2_scaler = MinMaxScaler(feature_range=(0,1),copy=False)
     data = []
     dates = []
     values = []
     changes = []
+    changes2 = []
 
     def __init__(self, ticker, start, end):
         self.ticker = ticker
@@ -40,15 +42,19 @@ class DataHandler():
             self.data = data
         self.values = list((float(s[-1]) for s in self.data))
         self.dates = list((dates.datestr2num(s[0]) for s in self.data))
-        self.changes = self.createChanges()
+        self.changes = self.createChanges(1)
+        self.changes2 = self.createChanges(2)
         self.changes = self.normalize(self.changes, self.change_scaler)
+        self.changes2 = self.normalize(self.changes2, self.change2_scaler)
         self.values = self.normalize(self.values, self.price_scaler)
 
-    def createChanges(self):
-        changes = [0]
+    def createChanges(self,days):
+        changes = []
+        for i in range(0,days):
+            changes.append(0)
         #remaining changes
-        for i in range(1,len(self.values)):
-             changes.append(self.values[i]-self.values[i-1])
+        for i in range(days,len(self.values)):
+             changes.append(self.values[i]-self.values[i-days])
         return changes
 
     #data normalization (0,1)
@@ -71,3 +77,6 @@ class DataHandler():
 
     def get_changes(self):
         return self.changes
+
+    def get_changes2(self):
+        return self.changes2
