@@ -1,5 +1,6 @@
 import csv, numpy, os.path, ystockquote
 from matplotlib import dates
+from sklearn.preprocessing import MinMaxScaler
 
 
 class DataHandler():
@@ -9,9 +10,10 @@ class DataHandler():
     ticker = ''
     startdate = ''
     enddate = ''
-    mean = 0
-    max = 0
+    scaler = MinMaxScaler(feature_range=(0,1),copy=False)
     data = []
+    dates = []
+    values = []
 
     def __init__(self, ticker, start, end):
         self.ticker = ticker
@@ -34,20 +36,22 @@ class DataHandler():
                 writer.writerows(data)
             data.reverse()
             self.data = data
+        self.values = list((float(s[-1]) for s in self.data))
+        self.dates = list((dates.datestr2num(s[0]) for s in self.data))
 
-    #data normalization functions {-1:1}
+    #data normalization functions {0.1:0.9}
     def normalize(self):
-        self.mean = numpy.mean(list(float(d[-1]) for d in self.data))
-        self.max = numpy.max(list(numpy.abs(float(d[-1])-self.mean) for d in self.data))
-        for i,val in enumerate(self.data):
-            self.data[i][-1] = (float(val[-1])-self.mean)/self.max
+        self.values = numpy.reshape(numpy.array(self.values),(len(self.values),1))
+        self.scaler.fit_transform(self.values)
+        self.values = list(numpy.reshape(self.values,(1,len(self.values))).flatten())
 
     def un_normalize(self):
-        for i,val in enumerate(self.data):
-            self.data[i] = (float(val[-1])*self.max)+self.mean
+        self.values = numpy.reshape(numpy.array(self.values),(len(self.values),1))
+        self.scaler.inverse_transform(self.values)
+        self.values = list(numpy.reshape(self.values,(1,len(self.values))).flatten())
 
     def get_dates(self):
-        return list((dates.datestr2num(s[0]) for s in self.data))
+        return self.dates
 
     def get_values(self):
-        return list((float(s[-1]) for s in self.data))
+        return self.values

@@ -2,6 +2,7 @@ import itertools, numpy, datahandler as dh
 from pybrain.datasets import SupervisedDataSet
 from pybrain.tools.shortcuts import buildNetwork
 from pybrain.supervised.trainers import BackpropTrainer
+from pybrain.tools.validation import Validator
 from matplotlib import pyplot as pp
 
 #Input Data
@@ -12,13 +13,13 @@ enddate = '20130303' #YYYYMMDD
 
 #Neural Network
 INPUT = INDICES * DAYS
-HIDDEN = 15
+HIDDEN = 40
 OUTPUT = 1
 
 #Training
-ITERATIONS = 10
-TRAINING = 2000
-TESTING = 800
+ITERATIONS = 30
+TRAINING = 2200
+TESTING = 609
 LRATE = 0.01
 
 
@@ -59,6 +60,12 @@ def get_output_vals(net, input):
 def get_output_dates(dates):
     return dates[TRAINING+DAYS:TRAINING+TESTING-OUTPUT]
 
+def absolute_error(output, target):
+    error = 0
+    for i in range(0,len(output)):
+        error += abs(output[i]-target[i])
+    error /= len(output)
+    return error
 
 
 #Main program
@@ -97,6 +104,9 @@ errors = train(net,data)
 
 sp_predicted = get_output_vals(net, vals)
 
+val = Validator()
+print "MSE: ",val.MSE(sp_predicted,spvalues[TRAINING+DAYS+OUTPUT:TRAINING+TESTING])
+print "MAE: ",absolute_error(sp_predicted,spvalues[TRAINING+DAYS+OUTPUT:TRAINING+TESTING])
 
 #Configure plots
 ENDTRAINING = TRAINING+DAYS
@@ -115,7 +125,6 @@ pp.grid(True)
 
 pp.subplot(313)
 pp.plot(numpy.reshape(errors[0],(len(errors[0]),1)))
-pp.plot(numpy.reshape(errors[1],(len(errors[1]),1)))
 pp.xlabel("Epoch Number")
 pp.ylabel("Mean-Squared Error")
 pp.grid(True)
