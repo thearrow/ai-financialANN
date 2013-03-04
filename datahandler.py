@@ -57,11 +57,15 @@ class DataHandler():
              changes.append(self.values[i]-self.values[i-days])
         return changes
 
-    #data normalization (0,1)
+    #data normalization (0.2,0.8)
     def normalize(self, input, scaler):
         data = numpy.reshape(numpy.array(input),(len(input),1))
         scaler.fit_transform(data)
-        return list(numpy.reshape(data,(1,len(data))).flatten())
+        data = list(numpy.reshape(data,(1,len(data))).flatten())
+
+        for i in range(0,len(data)):
+            data[i] = data[i]*0.6+0.2
+        return data
 
     #not completed
     def un_normalize(self):

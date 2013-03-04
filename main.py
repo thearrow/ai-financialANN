@@ -7,25 +7,26 @@ from matplotlib import pyplot as pp
 
 #Input Data
 INDICES = 4
-DAYS = 5
+DAYS = 4
 startdate = '20020101' #YYYYMMDD
 enddate = '20130301' #YYYYMMDD
 
 #Neural Network
 INPUT = INDICES * DAYS + INDICES*2
-HIDDEN = 20 #divisible by INDICES
+HIDDEN = 30 #divisible by 4 for net1
 OUTPUT = 1
 
 #Training
-ITERATIONS = 25
+ITERATIONS = 20
 TRAINING = 2200
 TESTING = 610
-LRATE = 0.01
+LRATE = 0.8
+MOMENTUM = 0.4
 
 
 #Neural Net Functions
 def train(net, data):
-    trainer = BackpropTrainer(net, data, learningrate=LRATE, momentum=0.9, weightdecay=0.0001)
+    trainer = BackpropTrainer(net, data, learningrate=LRATE, momentum=MOMENTUM, weightdecay=0.0001)
     print "Training..."
     #for _ in range(ITERATIONS):
     #    print trainer.train()
@@ -77,13 +78,14 @@ def absolute_errors(output, target):
 
 #Main program
 
-def assembleNetwork():
+def assembleNetwork1():
+    # (INPUT : HIDDENSPLIT : HIDDENSPLIT : OUTPUT)
     n = FeedForwardNetwork()
     n.addInputModule(LinearLayer(INPUT,name="in"))
-    n.addModule(SigmoidLayer(HIDDEN/INDICES,name="h1"))
-    n.addModule(SigmoidLayer(HIDDEN/INDICES,name="h2"))
-    n.addModule(LinearLayer(HIDDEN/INDICES,name="h3"))
-    n.addModule(LinearLayer(HIDDEN/INDICES,name="h4"))
+    n.addModule(SigmoidLayer(HIDDEN/4,name="h1"))
+    n.addModule(SigmoidLayer(HIDDEN/4,name="h2"))
+    n.addModule(LinearLayer(HIDDEN/4,name="h3"))
+    n.addModule(LinearLayer(HIDDEN/4,name="h4"))
     n.addModule(BiasUnit(name="bias"))
     n.addOutputModule(SigmoidLayer(OUTPUT,name="out"))
 
@@ -98,8 +100,25 @@ def assembleNetwork():
     n = n.convertToFastNetwork()
     return n
 
+def assembleNetwork2():
+    # (INPUT : HIDDEN : HIDDEN : OUTPUT)
+    n = FeedForwardNetwork()
+    n.addInputModule(LinearLayer(INPUT,name="in"))
+    n.addModule(SigmoidLayer(HIDDEN,name="h1"))
+    n.addModule(SigmoidLayer(HIDDEN,name="h2"))
+    n.addModule(BiasUnit(name="bias"))
+    n.addOutputModule(SigmoidLayer(OUTPUT,name="out"))
+
+    n.addConnection(FullConnection(n['bias'],n['in']))
+    n.addConnection(FullConnection(n['in'],n['h1']))
+    n.addConnection(FullConnection(n['in'],n['h2']))
+    n.addConnection(FullConnection(n['h2'],n['out']))
+    n.sortModules()
+    n = n.convertToFastNetwork()
+    return n
+
 #Feed-Forward:
-net = assembleNetwork()
+net = assembleNetwork2()
 net.randomize()
 
 #S&P 500
