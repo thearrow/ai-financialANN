@@ -9,7 +9,6 @@ from matplotlib import pyplot as pp
 INDICES = 4
 DAYS = 4
 startdate = '20020101'  # YYYYMMDD
-enddate = '20130301'  # YYYYMMDD
 
 #Neural Network
 INPUT = INDICES * DAYS + INDICES * 2
@@ -19,7 +18,7 @@ OUTPUT = 1
 #Training
 ITERATIONS = 20
 TRAINING = 2200
-TESTING = 610
+TESTING = 613
 LRATE = 0.8
 MOMENTUM = 0.4
 
@@ -127,26 +126,30 @@ net = assembleNetwork2()
 net.randomize()
 
 #S&P 500
-sp500 = dh.DataHandler("%5EGSPC", startdate, enddate)
+sp500 = dh.DataHandler()
+sp500.load_index("%5EGSPC", startdate)
 spdates = sp500.get_dates()
 spvalues = sp500.get_values()
 spchanges = sp500.get_changes()
 spchanges2 = sp500.get_changes2()
 
 #NASDAQ COMPOSITE INDEX
-nasdaq = dh.DataHandler("%5EIXIC", startdate, enddate)
+nasdaq = dh.DataHandler()
+nasdaq.load_index("%5EIXIC", startdate)
 nasvals = nasdaq.get_values()
 naschanges = nasdaq.get_changes()
 naschanges2 = nasdaq.get_changes2()
 
 #MAJOR MARKET INDEX
-tot = dh.DataHandler("%5EXMI", startdate, enddate)
+tot = dh.DataHandler()
+tot.load_index("%5EXMI", startdate)
 totvals = tot.get_values()
 totchanges = tot.get_changes()
 totchanges2 = tot.get_changes2()
 
 #NYSE COMPOSITE INDEX
-nyse = dh.DataHandler("%5ENYA", startdate, enddate)
+nyse = dh.DataHandler()
+nyse.load_index("%5ENYA", startdate)
 nysevals = nyse.get_values()
 nysechanges = nyse.get_changes()
 nysechanges2 = nyse.get_changes2()
