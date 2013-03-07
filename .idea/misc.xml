@@ -3,8 +3,6 @@
   <component name="CopyrightManager" default="">
     <module2copyright />
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="Python 2.7.3 (/usr/local/Cellar/python/2.7.3/Frameworks/Python.framework/Versions/2.7/bin/python2.7)" project-jdk-type="Python SDK">
-    <output url="file://$PROJECT_DIR$/out" />
-  </component>
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 2.7.3 (/usr/local/bin/python)" project-jdk-type="Python SDK" />
 </project>
 
