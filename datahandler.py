@@ -5,22 +5,21 @@ from datetime import date
 
 
 class DataHandler():
-    #Financial Data
-    filename = ''
-    ticker = ''
-    startdate = ''
-    enddate = ''
-    price_scaler = MinMaxScaler(feature_range=(0, 1), copy=False)
-    change_scaler = MinMaxScaler(feature_range=(0, 1), copy=False)
-    change2_scaler = MinMaxScaler(feature_range=(0, 1), copy=False)
-    data = []
-    dates = []
-    values = []
-    changes = []
-    changes2 = []
+
+    def __init__(self):
+        #Financial Data
+        self.filename = ''
+        self.ticker = ''
+        self.startdate = ''
+        self.enddate = ''
+        self.scalers = []
+        self.data = []
+        self.dates = []
+        self.values = []
+        self.changes = []
 
     #fetch financial data from file or yahoo API
-    def load_index(self, ticker, startdate):
+    def load_index(self, ticker, startdate, change_days):
         self.ticker = ticker
         self.filename = "%s.csv" % ticker
         self.startdate = startdate
@@ -37,37 +36,44 @@ class DataHandler():
                 writer.writerows(data)
             data.reverse()
             self.data = data
-        self.values = list((float(s[-1]) for s in self.data))
+        self.values = self.normalize(list(float(s[-1]) for s in self.data),
+                                     MinMaxScaler(feature_range=(0, 1), copy=False), 1)
         self.dates = list((dates.datestr2num(s[0]) for s in self.data))
-        self.changes = self.createChanges(1)
-        self.changes2 = self.createChanges(2)
-        self.changes = self.normalize(self.changes, self.change_scaler)
-        self.changes2 = self.normalize(self.changes2, self.change2_scaler)
-        self.values = self.normalize(self.values, self.price_scaler)
+        self.create_changes(change_days)
 
-    def createChanges(self, days):
+    def create_changes(self, change_days):
         changes = []
-        for i in range(0, days):
+        for i in range(1, change_days + 1):
+            self.scalers.append(MinMaxScaler(feature_range=(0, 1), copy=False))
+            changes.append(self.normalize(self.get_n_day_change(i), self.scalers[i - 1], 1))
+        self.changes = changes
+
+    def get_n_day_change(self, n):
+        changes = []
+        for i in range(0, n):
             changes.append(0)
-        for i in range(days, len(self.values)):
-            changes.append(self.values[i] - self.values[i - days])
+        for i in range(n, len(self.values)):
+            changes.append(self.values[i] - self.values[i - n])
         return changes
 
     #data normalization (0.2,0.8)
-    def normalize(self, input, scaler):
-        data = numpy.reshape(numpy.array(input), (len(input), 1))
-        scaler.fit_transform(data)
+    def normalize(self, input_data, scaler, fit):
+        data = numpy.reshape(numpy.array(input_data), (len(input_data), 1))
+        if fit == 1:
+            scaler.fit(data)
+        scaler.transform(data)
         data = list(numpy.reshape(data, (1, len(data))).flatten())
-
         for i in range(0, len(data)):
             data[i] = data[i] * 0.6 + 0.2
         return data
 
-    #not completed
-    def un_normalize(self):
-        self.values = numpy.reshape(numpy.array(self.values), (len(self.values), 1))
-        #self.scaler.inverse_transform(self.values)
-        self.values = list(numpy.reshape(self.values, (1, len(self.values))).flatten())
+    def un_normalize(self, input_data, scaler):
+        for i in range(0, len(input_data)):
+            input_data[i] = (input_data[i] - 0.2) / 0.6
+        data = numpy.reshape(numpy.array(input_data), (len(input_data), 1))
+        scaler.inverse_transform(data)
+        data = list(numpy.reshape(data, (1, len(data))).flatten())
+        return data
 
     def get_dates(self):
         return self.dates
@@ -78,5 +84,5 @@ class DataHandler():
     def get_changes(self):
         return self.changes
 
-    def get_changes2(self):
-        return self.changes2
+    def get_scalers(self):
+        return self.scalers
