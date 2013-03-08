@@ -36,10 +36,18 @@ class DataHandler():
                 writer.writerows(data)
             data.reverse()
             self.data = data
-        self.values = self.normalize(list(float(s[-1]) for s in self.data),
-                                     MinMaxScaler(feature_range=(0, 1), copy=False), 1)
+        self.values = list(float(s[-1]) for s in self.data)
         self.dates = list((dates.datestr2num(s[0]) for s in self.data))
         self.create_changes(change_days)
+        self.consilidate_data()
+
+    def consilidate_data(self):
+        self.data = []
+        for i in range(0, len(self.values)):
+            changes = []
+            for j in range(0, len(self.changes)):
+                changes.append(self.changes[j][i])
+            self.data.append({'date': self.dates[i], 'value': self.values[i], 'changes': changes})
 
     def create_changes(self, change_days):
         changes = []
@@ -76,13 +84,22 @@ class DataHandler():
         return data
 
     def get_dates(self):
-        return self.dates
+        dates = []
+        for d in self.data:
+            dates.append(d['date'])
+        return dates
 
     def get_values(self):
-        return self.values
+        vals = []
+        for d in self.data:
+            vals.append(d['value'])
+        return vals
 
     def get_changes(self):
-        return self.changes
+        changes = []
+        for d in self.data:
+            changes.append(d['changes'])
+        return changes
 
     def get_scalers(self):
         return self.scalers

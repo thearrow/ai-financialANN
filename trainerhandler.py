@@ -24,7 +24,8 @@ class TrainerHandler():
         cds = self.change_days
         while count + cds + self.outs < self.train:
             ins = self.input_slice(count, cds, datahandlers)
-            outs = datahandlers[target_index].get_changes()[0][count + cds + 1:count + cds + 1 + self.outs]
+            out_changes = datahandlers[target_index].get_changes()
+            outs = out_changes[count + cds + 1:count + cds + 1 + self.outs][0][0]
             self.data.addSample(ins, outs)
             count += 1
 
@@ -32,8 +33,9 @@ class TrainerHandler():
         ins = []
         for dh in datahandlers:
             changes = dh.get_changes()
-            for j in range(0, self.change_days):
-                ins.extend(changes[j][i + days - 1:i + days])
+            lol = changes[i + days - 1:i + days]
+            l = [val for subl in lol for val in subl]
+            ins.extend(l)
         return ins
 
     def perform_training(self, net):
