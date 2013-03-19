@@ -3,7 +3,6 @@ import pandas as pan
 import numpy as np
 import datetime
 import matplotlib.pyplot as plt
-from sklearn import preprocessing
 
 
 class DataHandler():
@@ -42,9 +41,7 @@ class DataHandler():
 
         change_days = 1
         changes = self.series.diff(change_days)
-        scaler = preprocessing.MinMaxScaler(0.0, 1.0)
-        change_series = pan.Series(scaler.fit_transform(changes.values[np.isfinite(changes.values)]), changes.index[change_days:])
 
         plt.figure()
-        change_series.plot()
+        changes.plot()
         plt.show()
