@@ -1,7 +1,9 @@
-import csv, numpy, os.path, ystockquote
-from matplotlib import dates
-from sklearn.preprocessing import MinMaxScaler
-from datetime import date
+import csv, os.path, ystockquote
+import pandas as pan
+import numpy as np
+import datetime
+import matplotlib.pyplot as plt
+from sklearn import preprocessing
 
 
 class DataHandler():
@@ -10,19 +12,17 @@ class DataHandler():
     ticker = ''
     startdate = ''
     enddate = ''
-    price_scaler = MinMaxScaler(feature_range=(0, 1), copy=False)
-    change_scaler = MinMaxScaler(feature_range=(0, 1), copy=False)
-    change2_scaler = MinMaxScaler(feature_range=(0, 1), copy=False)
     data = []
     dates = []
     values = []
+    series = []
 
     #fetch financial data from file or yahoo API
     def load_index(self, ticker, startdate):
         self.ticker = ticker
         self.filename = "%s.csv" % ticker
         self.startdate = startdate
-        self.enddate = date.today().strftime("%Y%m%d")
+        self.enddate = datetime.date.today().strftime("%Y%m%d")
         if os.path.isfile(self.filename):
             data = list(csv.reader(open(self.filename, 'rb'), delimiter=','))
             data.reverse()
@@ -35,5 +35,16 @@ class DataHandler():
                 writer.writerows(data)
             data.reverse()
             self.data = data
-        self.values = list((float(s[-1]) for s in self.data))
-        self.dates = list((dates.datestr2num(s[0]) for s in self.data))
+        self.values = np.array(list(float(s[-1]) for s in self.data))
+        print type(self.values[0])
+        self.dates = (datetime.datetime.strptime(s[0], "%Y-%m-%d") for s in self.data)
+        self.series = pan.Series(self.values, pan.DatetimeIndex(self.dates))
+
+        change_days = 1
+        changes = self.series.diff(change_days)
+        scaler = preprocessing.MinMaxScaler(0.0, 1.0)
+        change_series = pan.Series(scaler.fit_transform(changes.values[np.isfinite(changes.values)]), changes.index[change_days:])
+
+        plt.figure()
+        change_series.plot()
+        plt.show()

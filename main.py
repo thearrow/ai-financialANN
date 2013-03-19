@@ -6,13 +6,13 @@ from pybrain.tools.validation import Validator
 from matplotlib import pyplot as pp
 
 #Input Data
-INDICES = 4
+INDICES = 1
 DAYS = 4
 startdate = '20020101'  # YYYYMMDD
 
 #Neural Network
 INPUT = INDICES * DAYS + INDICES * 2
-HIDDEN = 30  # divisible by 4 for net1
+HIDDEN = 30
 OUTPUT = 1
 
 #Training
@@ -59,19 +59,20 @@ sp500 = dh.DataHandler()
 sp500.load_index("%5EGSPC", startdate)
 
 #NASDAQ COMPOSITE INDEX
-nasdaq = dh.DataHandler()
-nasdaq.load_index("%5EIXIC", startdate)
+#nasdaq = dh.DataHandler()
+#nasdaq.load_index("%5EIXIC", startdate)
 
 #MAJOR MARKET INDEX
-tot = dh.DataHandler()
-tot.load_index("%5EXMI", startdate)
+#tot = dh.DataHandler()
+#tot.load_index("%5EXMI", startdate)
 
 #NYSE COMPOSITE INDEX
-nyse = dh.DataHandler()
-nyse.load_index("%5ENYA", startdate)
+#nyse = dh.DataHandler()
+#nyse.load_index("%5ENYA", startdate)
 
 
 #Configure plots
+#datestr2num
 # ENDTRAINING = TRAINING + DAYS
 # predicted_dates = get_output_dates(spdates)
 # pp.subplot2grid((3, 4), (0, 0), colspan=4)
