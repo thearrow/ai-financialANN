@@ -2,7 +2,7 @@ import csv, os.path, ystockquote
 import pandas as pan
 import numpy as np
 import datetime
-import matplotlib.pyplot as plt
+from sklearn import preprocessing
 
 
 class DataHandler():
@@ -39,9 +39,7 @@ class DataHandler():
         self.dates = (datetime.datetime.strptime(s[0], "%Y-%m-%d") for s in self.data)
         self.series = pan.Series(self.values, pan.DatetimeIndex(self.dates))
 
-        change_days = 1
-        changes = self.series.diff(change_days)
-
-        plt.figure()
-        changes.plot()
-        plt.show()
+    def change_series(self, days):
+        changes = self.series.diff(days)
+        change_vals = preprocessing.scale(changes.values[np.isfinite(changes.values)])
+        return pan.Series(change_vals, changes.index[days:])
