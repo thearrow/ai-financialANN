@@ -24,21 +24,18 @@ sp500 = dh.DataHandler()
 sp500.load_index("%5EGSPC", startdate)
 
 sp_net = nh.NetHandler(INPUT, HIDDEN, OUTPUT)
-change_series = []
-for i in range(1, DAYS + 1):
-    change_series.append(sp500.change_series(i))
-sp_net.create_training_data(change_series, TRAINING)
+sp_net.create_training_data(sp500, TRAINING)
 train_errors, val_errors = sp_net.train(LRATE, MOMENTUM, ITERATIONS)
 
 out_ser = sp_net.get_output(TRAINING, TESTING)
 pp.figure(0)
-sp_net.series[0].plot(style='bo')
+sp500.change_series(1).plot(style='bo')
 out_ser.plot(style='ro')
 pp.show(0)
 
 correct = 0
 i = 0
-for val in sp_net.series[0][out_ser.index]:
+for val in sp500.change_series(1)[out_ser.index]:
     if (val > 0 and out_ser[i] > 0) or (val < 0 and out_ser[i] < 0):
         correct += 1
     i += 1

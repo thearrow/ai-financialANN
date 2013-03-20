@@ -17,6 +17,7 @@ class DataHandler():
     series = []
     vals_min = 0
     vals_max = 0
+    change_series_cache = []
 
     #fetch financial data from file or yahoo API
     def load_index(self, ticker, startdate):
