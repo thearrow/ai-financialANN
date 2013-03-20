@@ -17,7 +17,7 @@ class DataHandler():
     series = []
     vals_min = 0
     vals_max = 0
-    change_series_cache = []
+    change_series_cache = {}
 
     #fetch financial data from file or yahoo API
     def load_index(self, ticker, startdate):
@@ -49,12 +49,17 @@ class DataHandler():
         return pan.Series(norm_vals, self.series.index)
 
     def change_series(self, days):
-        changes = self.series.diff(days)
-        #mean->0 ; stdev->1
-        change_vals = preprocessing.scale(changes.values[np.isfinite(changes.values)])
-        #max->1 ; min->-1
-        change_vals = self.scale_vals(change_vals)
-        return pan.Series(change_vals, changes.index[days:])
+        if self.change_series_cache.has_key(days):
+            return self.change_series_cache.get(days)
+        else:
+            changes = self.series.diff(days)
+            #mean->0 ; stdev->1
+            change_vals = preprocessing.scale(changes.values[np.isfinite(changes.values)])
+            #max->1 ; min->-1
+            change_vals = self.scale_vals(change_vals)
+            series = pan.Series(change_vals, changes.index[days:])
+            self.change_series_cache[days] = series
+            return series
 
     def scale_vals(self, vals):
         #scale to {-1,1}

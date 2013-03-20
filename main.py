@@ -9,7 +9,7 @@ TESTING = 300
 startdate = '20020101'  # YYYYMMDD
 
 #Neural Network
-INPUT = DAYS
+INPUT = DAYS * 2
 HIDDEN = 20
 OUTPUT = 1
 
