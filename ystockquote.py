@@ -13,18 +13,6 @@
 import urllib
 
 
-"""
-This is the "ystockquote" module.
-
-This module provides a Python API for retrieving stock data from Yahoo Finance.
-
-sample usage:
->>> import ystockquote
->>> print ystockquote.get_price('GOOG')
-529.46
-"""
-
-
 def __request(symbol, stat):
     url = 'http://finance.yahoo.com/d/quotes.csv?s=%s&f=%s' % (symbol, stat)
     return urllib.urlopen(url).read().strip().strip('"')

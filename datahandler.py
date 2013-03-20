@@ -35,11 +35,30 @@ class DataHandler():
             data.reverse()
             self.data = data
         self.values = np.array(list(float(s[-1]) for s in self.data))
-        print type(self.values[0])
         self.dates = (datetime.datetime.strptime(s[0], "%Y-%m-%d") for s in self.data)
         self.series = pan.Series(self.values, pan.DatetimeIndex(self.dates))
 
+    def value_series(self):
+        #mean->0 ; stdev->1
+        norm_vals = preprocessing.scale(self.series.values)
+        #max->1 ; min->-1
+        norm_vals = self.scale_vals(norm_vals)
+        return pan.Series(norm_vals, self.series.index)
+
     def change_series(self, days):
         changes = self.series.diff(days)
+        #mean->0 ; stdev->1
         change_vals = preprocessing.scale(changes.values[np.isfinite(changes.values)])
+        #max->1 ; min->-1
+        change_vals = self.scale_vals(change_vals)
         return pan.Series(change_vals, changes.index[days:])
+
+    def scale_vals(self, vals):
+        #scale to {-1,1}
+        max_val = np.max(vals)
+        min_val = np.min(vals)
+        scale = 2 / (max_val - min_val)
+        outs = []
+        for val in vals:
+            outs.append(scale * val)
+        return np.array(outs)

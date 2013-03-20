@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="4f03a122-3330-4b63-aa1d-bf8a0411bf10" name="Default" comment="cleanup into change_series">
+    <list default="true" id="4f03a122-3330-4b63-aa1d-bf8a0411bf10" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/nethandler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datahandler.py" afterPath="$PROJECT_DIR$/datahandler.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ystockquote.py" afterPath="$PROJECT_DIR$/ystockquote.py" />
     </list>
     <ignored path="AI-project.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/main.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363725825619" ignored="false" />
-    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363736113769" ignored="false" />
-    <file path="/datahandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363736092535" ignored="false" />
+    <file path="/main.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363745580405" ignored="false" />
+    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363736216529" ignored="false" />
+    <file path="/datahandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363744342816" ignored="false" />
     <file path="/trainerhandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362720752323" ignored="false" />
+    <file path="/nethandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363746045744" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,21 +73,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="main.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="8" column="11" selection-start="355" selection-end="355" vertical-scroll-proportion="0.0">
+            <state line="18" column="14" selection-start="279" selection-end="279" vertical-scroll-proportion="0.24902724">
               <folding>
-                <element signature="e#0#42#0" expanded="true" />
+                <element signature="e#0#24#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="datahandler.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="nethandler.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/nethandler.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="52" column="72" selection-start="1984" selection-end="1984" vertical-scroll-proportion="0.0">
+              <folding>
+                <element signature="e#0#46#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="datahandler.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datahandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="17" selection-start="183" selection-end="183" vertical-scroll-proportion="-0.35603112">
+            <state line="59" column="39" selection-start="2046" selection-end="2046" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -116,11 +131,12 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/ystockquote.py" />
         <option value="$PROJECT_DIR$/test" />
         <option value="$PROJECT_DIR$/trainerhandler.py" />
-        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/ystockquote.py" />
         <option value="$PROJECT_DIR$/datahandler.py" />
+        <option value="$PROJECT_DIR$/nethandler.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -155,7 +171,7 @@
     <OptionsSetting value="true" id="Update" />
     <OptionsSetting value="true" id="Status" />
     <OptionsSetting value="true" id="Edit" />
-    <ConfirmationsSetting value="0" id="Add" />
+    <ConfirmationsSetting value="2" id="Add" />
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectReloadState">
@@ -203,7 +219,7 @@
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.08628128" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="options.lastSelected" value="editor" />
+    <property name="options.lastSelected" value="preferences.keymap" />
     <property name="recentsLimit" value="5" />
     <property name="MemberChooser.sorted" value="false" />
     <property name="last_opened_file_path" value="/usr/local/Cellar/python/2.7.3/Frameworks/Python.framework/Versions/2.7/bin/python2.7" />
@@ -432,7 +448,11 @@
       <created>1363735728856</created>
       <updated>1363735728856</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="cleanup into change_series function">
+      <created>1363736229103</created>
+      <updated>1363736229103</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -448,7 +468,7 @@
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39775562" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917705" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.27805486" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3478803" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32917705" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -501,7 +521,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="use pandas timeseries for data" />
+    <option name="LAST_COMMIT_MESSAGE" value="cleanup into change_series function" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -538,6 +558,7 @@
     <MESSAGE value="start over" />
     <MESSAGE value="broken" />
     <MESSAGE value="use pandas timeseries for data" />
+    <MESSAGE value="cleanup into change_series function" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -552,7 +573,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="118" column="66" selection-start="3386" selection-end="3386" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -561,7 +582,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="85" column="49" selection-start="2473" selection-end="2473" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -570,7 +591,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state line="20" column="10" selection-start="507" selection-end="507" vertical-scroll-proportion="0.0">
           <folding>
-            <element signature="e#0#42#0" expanded="true" />
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -578,11 +599,6 @@
     <entry file="file:///usr/local/lib/python2.7/site-packages/pybrain/supervised/trainers/trainer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="31" column="8" selection-start="961" selection-end="961" vertical-scroll-proportion="0.5813953" />
-      </provider>
-    </entry>
-    <entry file="file:///usr/local/lib/python2.7/site-packages/pybrain/supervised/trainers/backprop.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="185" column="8" selection-start="7272" selection-end="7272" vertical-scroll-proportion="4.987879" />
       </provider>
     </entry>
     <entry file="file:///usr/local/lib/python2.7/site-packages/pybrain/tools/validation.py">
@@ -598,11 +614,6 @@
     <entry file="file:///usr/local/lib/python2.7/site-packages/pybrain/structure/networks/network.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="312" column="0" selection-start="11238" selection-end="11238" vertical-scroll-proportion="0.95607233" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ystockquote.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="150" column="45" selection-start="3347" selection-end="3381" vertical-scroll-proportion="0.9121447" />
       </provider>
     </entry>
     <entry file="file:///usr/local/Cellar/numpy/1.7.0/lib/python2.7/site-packages/numpy/core/numeric.py">
@@ -627,20 +638,43 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/ystockquote.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="8" column="11" selection-start="355" selection-end="355" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#42#0" expanded="true" />
-          </folding>
+        <state line="14" column="0" selection-start="388" selection-end="388" vertical-scroll-proportion="-2.0968993">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/local/lib/python2.7/site-packages/pybrain/supervised/trainers/backprop.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="185" column="8" selection-start="7272" selection-end="7272" vertical-scroll-proportion="-1.1979798">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/datahandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="17" selection-start="183" selection-end="183" vertical-scroll-proportion="-0.35603112">
+        <state line="59" column="39" selection-start="2046" selection-end="2046" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/nethandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="72" selection-start="1984" selection-end="1984" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="14" selection-start="279" selection-end="279" vertical-scroll-proportion="0.24902724">
+          <folding>
+            <element signature="e#0#24#0" expanded="true" />
           </folding>
         </state>
       </provider>
