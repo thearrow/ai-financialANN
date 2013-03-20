@@ -2,18 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f03a122-3330-4b63-aa1d-bf8a0411bf10" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datahandler.py" afterPath="$PROJECT_DIR$/datahandler.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nethandler.py" afterPath="$PROJECT_DIR$/nethandler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="AI-project.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/main.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363752497952" ignored="false" />
-    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363753653778" ignored="false" />
+    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363756019292" ignored="false" />
     <file path="/datahandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363755637228" ignored="false" />
     <file path="/trainerhandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362720752323" ignored="false" />
-    <file path="/nethandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363755814238" ignored="false" />
+    <file path="/nethandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363756150169" ignored="false" />
     <file path="/usr/local/Cellar/python/2.7.3/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/sklearn/externals/joblib/parallel.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363753505176" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +74,7 @@
       <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="16" selection-start="205" selection-end="205" vertical-scroll-proportion="0.24160206">
+            <state line="16" column="14" selection-start="254" selection-end="254" vertical-scroll-proportion="0.49610895">
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -87,7 +85,7 @@
       <file leaf-file-name="nethandler.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nethandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="5" column="0" selection-start="248" selection-end="248" vertical-scroll-proportion="0.0">
+            <state line="56" column="115" selection-start="2124" selection-end="2124" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -134,8 +132,8 @@
         <option value="$PROJECT_DIR$/test" />
         <option value="$PROJECT_DIR$/trainerhandler.py" />
         <option value="$PROJECT_DIR$/ystockquote.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/datahandler.py" />
+        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/nethandler.py" />
       </list>
     </option>
@@ -482,15 +480,19 @@
       <created>1363753655542</created>
       <updated>1363753655542</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="smarter caching and split inputs between data and prices">
+      <created>1363756020510</created>
+      <updated>1363756020510</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3241895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3241895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -551,7 +553,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="tweak data creation a bit" />
+    <option name="LAST_COMMIT_MESSAGE" value="smarter caching and split inputs between data and prices" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -564,7 +566,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="change intellij settings" />
     <MESSAGE value="use neurolab for elman recurrent net" />
     <MESSAGE value="not really what I wanted..." />
     <MESSAGE value="remove nasdaq and simplify" />
@@ -589,6 +590,7 @@
     <MESSAGE value="modularized nicely" />
     <MESSAGE value="retarded change attempt" />
     <MESSAGE value="tweak data creation a bit" />
+    <MESSAGE value="smarter caching and split inputs between data and prices" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -700,7 +702,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/nethandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="5" column="0" selection-start="248" selection-end="248" vertical-scroll-proportion="0.0">
+        <state line="56" column="115" selection-start="2124" selection-end="2124" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
@@ -709,7 +711,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="16" selection-start="205" selection-end="205" vertical-scroll-proportion="0.24160206">
+        <state line="16" column="14" selection-start="254" selection-end="254" vertical-scroll-proportion="0.49610895">
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>

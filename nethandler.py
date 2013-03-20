@@ -54,7 +54,7 @@ class NetHandler():
         for i in range(TRAINING, TRAINING + TESTING - self.INS - self.OUTS):
             ins = self.get_inputs(i)
             outputs.extend(self.net.activate(ins))
-        return pan.Series(outputs, self.value_series.index[TRAINING + self.INS:TRAINING + TESTING - self.OUTS])
+        return pan.Series(outputs, self.value_series.index[TRAINING+2:TRAINING + TESTING - self.INS - self.OUTS+2])
 
     def get_inputs(self, i):
         ins = []
