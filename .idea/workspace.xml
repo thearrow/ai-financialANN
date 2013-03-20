@@ -2,19 +2,18 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f03a122-3330-4b63-aa1d-bf8a0411bf10" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/nethandler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datahandler.py" afterPath="$PROJECT_DIR$/datahandler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nethandler.py" afterPath="$PROJECT_DIR$/nethandler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ystockquote.py" afterPath="$PROJECT_DIR$/ystockquote.py" />
     </list>
     <ignored path="AI-project.iws" />
     <ignored path=".idea/workspace.xml" />
-    <file path="/main.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363745580405" ignored="false" />
-    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363736216529" ignored="false" />
-    <file path="/datahandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363744342816" ignored="false" />
+    <file path="/main.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363749078985" ignored="false" />
+    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363746244740" ignored="false" />
+    <file path="/datahandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363748187568" ignored="false" />
     <file path="/trainerhandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362720752323" ignored="false" />
-    <file path="/nethandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363746045744" ignored="false" />
+    <file path="/nethandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363748079739" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -76,7 +75,7 @@
       <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="14" selection-start="279" selection-end="279" vertical-scroll-proportion="0.24902724">
+            <state line="40" column="43" selection-start="814" selection-end="814" vertical-scroll-proportion="0.6808786">
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -87,7 +86,7 @@
       <file leaf-file-name="nethandler.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nethandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="72" selection-start="1984" selection-end="1984" vertical-scroll-proportion="0.0">
+            <state line="56" column="50" selection-start="2060" selection-end="2060" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -98,7 +97,7 @@
       <file leaf-file-name="datahandler.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/datahandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="59" column="39" selection-start="2046" selection-end="2046" vertical-scroll-proportion="0.0">
+            <state line="18" column="16" selection-start="330" selection-end="330" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#32#0" expanded="true" />
               </folding>
@@ -134,8 +133,8 @@
         <option value="$PROJECT_DIR$/test" />
         <option value="$PROJECT_DIR$/trainerhandler.py" />
         <option value="$PROJECT_DIR$/ystockquote.py" />
-        <option value="$PROJECT_DIR$/datahandler.py" />
         <option value="$PROJECT_DIR$/nethandler.py" />
+        <option value="$PROJECT_DIR$/datahandler.py" />
         <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
@@ -452,15 +451,19 @@
       <created>1363736229103</created>
       <updated>1363736229103</updated>
     </task>
-    <option name="localTasksCounter" value="28" />
+    <task id="LOCAL-00028" summary="modularized nicely">
+      <created>1363746248102</created>
+      <updated>1363746248102</updated>
+    </task>
+    <option name="localTasksCounter" value="29" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3241895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3241895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
@@ -521,7 +524,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="cleanup into change_series function" />
+    <option name="LAST_COMMIT_MESSAGE" value="modularized nicely" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -534,7 +537,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="start ANN" />
     <MESSAGE value="ANN working, sort of" />
     <MESSAGE value="un-normalize and show training/testing line" />
     <MESSAGE value="change intellij settings" />
@@ -559,6 +561,7 @@
     <MESSAGE value="broken" />
     <MESSAGE value="use pandas timeseries for data" />
     <MESSAGE value="cleanup into change_series function" />
+    <MESSAGE value="modularized nicely" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -652,27 +655,34 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/datahandler.py">
+    <entry file="file:///usr/local/lib/python2.7/site-packages/pybrain/datasets/dataset.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="59" column="39" selection-start="2046" selection-end="2046" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="e#0#32#0" expanded="true" />
-          </folding>
+        <state line="214" column="0" selection-start="7610" selection-end="7610" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/nethandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="72" selection-start="1984" selection-end="1984" vertical-scroll-proportion="0.0">
+        <state line="56" column="50" selection-start="2060" selection-end="2060" vertical-scroll-proportion="0.0">
           <folding>
             <element signature="e#0#46#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/datahandler.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="16" selection-start="330" selection-end="330" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#32#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="14" selection-start="279" selection-end="279" vertical-scroll-proportion="0.24902724">
+        <state line="40" column="43" selection-start="814" selection-end="814" vertical-scroll-proportion="0.6808786">
           <folding>
             <element signature="e#0#24#0" expanded="true" />
           </folding>

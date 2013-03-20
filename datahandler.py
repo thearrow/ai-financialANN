@@ -15,6 +15,8 @@ class DataHandler():
     dates = []
     values = []
     series = []
+    vals_min = 0
+    vals_max = 0
 
     #fetch financial data from file or yahoo API
     def load_index(self, ticker, startdate):
@@ -55,9 +57,9 @@ class DataHandler():
 
     def scale_vals(self, vals):
         #scale to {-1,1}
-        max_val = np.max(vals)
-        min_val = np.min(vals)
-        scale = 2 / (max_val - min_val)
+        self.vals_max = np.max(vals)
+        self.vals_min = np.min(vals)
+        scale = 2 / (self.vals_max - self.vals_min)
         outs = []
         for val in vals:
             outs.append(scale * val)
