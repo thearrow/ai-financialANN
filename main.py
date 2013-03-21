@@ -4,19 +4,19 @@ from matplotlib import pyplot as pp
 
 #Input Data
 DAYS = 5
-TRAINING = 2000
-TESTING = 300
+TRAINING = 2600
+TESTING = 223
 startdate = '20020101'  # YYYYMMDD
 
 #Neural Network
-INPUT = DAYS * 2
+INPUT = DAYS
 HIDDEN = 20
 OUTPUT = 1
 
 #Training
 ITERATIONS = 20
 LRATE = 0.8
-MOMENTUM = 0.01
+MOMENTUM = 0.1
 
 
 #S&P 500
@@ -29,13 +29,13 @@ train_errors, val_errors = sp_net.train(LRATE, MOMENTUM, ITERATIONS)
 
 out_ser = sp_net.get_output(TRAINING, TESTING)
 pp.figure(0)
-sp500.change_series(1).plot(style='bo')
-out_ser.plot(style='ro')
+sp500.value_series().plot(style='b-')
+out_ser.plot(style='r-')
 pp.show(0)
 
 correct = 0
 i = 0
-for val in sp500.change_series(1)[out_ser.index]:
+for val in sp500.value_series()[out_ser.index]:
     if (val > 0 and out_ser[i] > 0) or (val < 0 and out_ser[i] < 0):
         correct += 1
     i += 1
