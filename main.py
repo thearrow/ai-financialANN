@@ -5,7 +5,7 @@ from matplotlib import pyplot as pp
 #Input Data
 DAYS = 5
 TRAINING = 2600
-TESTING = 223
+TESTING = 203
 startdate = '20020101'  # YYYYMMDD
 
 #Neural Network
@@ -29,18 +29,9 @@ train_errors, val_errors = sp_net.train(LRATE, MOMENTUM, ITERATIONS)
 
 out_ser = sp_net.get_output(TRAINING, TESTING)
 pp.figure(0)
-sp500.value_series().plot(style='b-')
+sp500.data.ix[:, 0].plot(style='b-')
 out_ser.plot(style='r-')
 pp.show(0)
-
-correct = 0
-i = 0
-for val in sp500.value_series()[out_ser.index]:
-    if (val > 0 and out_ser[i] > 0) or (val < 0 and out_ser[i] < 0):
-        correct += 1
-    i += 1
-
-print float(correct) / float(i)
 
 pp.figure(1)
 pp.plot(train_errors)

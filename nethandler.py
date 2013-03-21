@@ -3,16 +3,17 @@ from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure import LinearLayer, FullConnection, FeedForwardNetwork, BiasUnit, TanhLayer
 import pandas as pan
 import datahandler as dh
+import numpy as np
 
 
 class NetHandler():
     net = ''
     handler = dh.DataHandler()
+    indata = ''
     data = ''
     INS = 0
     HIDDEN = 0
     OUTS = 0
-    value_series = pan.Series()
 
     def __init__(self, INS, HIDDEN, OUT):
         self.INS = INS
@@ -37,11 +38,11 @@ class NetHandler():
 
     def create_training_data(self, handler, TRAINING):
         self.handler = handler
-        self.value_series = handler.value_series()
+        self.indata = handler.data
         self.data = SupervisedDataSet(self.INS, self.OUTS)
-        for i in range(self.INS, TRAINING - self.OUTS):
-            ins = self.get_inputs(i)
-            target = self.handler.value_series()[i + self.OUTS]
+        for i in range(0, (TRAINING - self.OUTS)):
+            ins = self.indata.ix[i].values
+            target = self.indata.ix[i + 1].values[0]
             self.data.addSample(ins, target)
 
     def train(self, LRATE, MOMENTUM, ITERATIONS):
@@ -51,12 +52,9 @@ class NetHandler():
 
     def get_output(self, TRAINING, TESTING):
         outputs = []
-        for i in range(TRAINING + self.OUTS, TRAINING + TESTING):
-            ins = self.get_inputs(i)
-            outputs.extend(self.net.activate(ins))
-        return pan.Series(outputs, self.value_series.index[TRAINING:TRAINING + TESTING])
-
-    def get_inputs(self, i):
-        ins = []
-        ins.extend(self.value_series[i - self.INS:i].values)
-        return ins
+        end_index = TRAINING + TESTING
+        print end_index
+        for i in range(TRAINING, end_index):
+            ins = self.indata.ix[i].values
+            outputs.extend(self.net.activate(np.array(ins)))
+        return pan.Series(outputs, self.indata.index[TRAINING:end_index])
