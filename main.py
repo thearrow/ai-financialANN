@@ -3,14 +3,13 @@ import nethandler as nh
 from matplotlib import pyplot as pp
 
 #Input Data
-DAYS = 5
-TRAINING = 2600
-TESTING = 203
+TRAINING = 2200
+TESTING = 603
 startdate = '20020101'  # YYYYMMDD
 
 #Neural Network
-INPUT = DAYS
-HIDDEN = 20
+INPUT = 5
+HIDDEN = 10
 OUTPUT = 1
 
 #Training

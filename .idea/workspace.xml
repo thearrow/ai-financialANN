@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="4f03a122-3330-4b63-aa1d-bf8a0411bf10" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/%5EGSPC.csv" afterPath="$PROJECT_DIR$/%5EGSPC.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/datahandler.py" afterPath="$PROJECT_DIR$/datahandler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/main.py" afterPath="$PROJECT_DIR$/main.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nethandler.py" afterPath="$PROJECT_DIR$/nethandler.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
@@ -11,10 +9,10 @@
     <ignored path="AI-project.iws" />
     <ignored path=".idea/workspace.xml" />
     <file path="/main.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363838501792" ignored="false" />
-    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363819037556" ignored="false" />
+    <file path="/Dummy.txt" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363838640372" ignored="false" />
     <file path="/datahandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363837045104" ignored="false" />
     <file path="/trainerhandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1362720752323" ignored="false" />
-    <file path="/nethandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363838370046" ignored="false" />
+    <file path="/nethandler.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363839040795" ignored="false" />
     <file path="/usr/local/Cellar/python/2.7.3/Frameworks/Python.framework/Versions/2.7/lib/python2.7/site-packages/sklearn/externals/joblib/parallel.py" changelist="4f03a122-3330-4b63-aa1d-bf8a0411bf10" time="1363753505176" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -74,10 +72,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="main.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="main.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="31" column="17" selection-start="593" selection-end="593" vertical-scroll-proportion="0.0">
+            <state line="34" column="0" selection-start="638" selection-end="638" vertical-scroll-proportion="0.81128407">
               <folding>
                 <element signature="e#0#24#0" expanded="true" />
               </folding>
@@ -85,10 +83,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nethandler.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="nethandler.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/nethandler.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="44" selection-start="1926" selection-end="1926" vertical-scroll-proportion="1.1750972">
+            <state line="46" column="51" selection-start="1558" selection-end="1558" vertical-scroll-proportion="0.0">
               <folding>
                 <element signature="e#0#46#0" expanded="true" />
               </folding>
@@ -136,8 +134,8 @@
         <option value="$PROJECT_DIR$/trainerhandler.py" />
         <option value="$PROJECT_DIR$/ystockquote.py" />
         <option value="$PROJECT_DIR$/datahandler.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/nethandler.py" />
+        <option value="$PROJECT_DIR$/main.py" />
       </list>
     </option>
   </component>
@@ -491,13 +489,18 @@
       <created>1363756411150</created>
       <updated>1363756411150</updated>
     </task>
-    <option name="localTasksCounter" value="33" />
+    <task id="LOCAL-00033" summary="simplify, simplify, use pandas dataframe for data">
+      <created>1363838642762</created>
+      <updated>1363838642762</updated>
+    </task>
+    <option name="localTasksCounter" value="34" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
     <editor active="false" />
     <layout>
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3241895" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -513,7 +516,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Debug with VisualVM" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -560,7 +562,7 @@
     <option name="MAXIMUM_HISTORY_ROWS" value="1000" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="too accurate to be possible... find the bug!" />
+    <option name="LAST_COMMIT_MESSAGE" value="simplify, simplify, use pandas dataframe for data" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="false" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -573,7 +575,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="not really what I wanted..." />
     <MESSAGE value="remove nasdaq and simplify" />
     <MESSAGE value="fancy graphs" />
     <MESSAGE value="refactor out some of the data handling" />
@@ -598,6 +599,7 @@
     <MESSAGE value="tweak data creation a bit" />
     <MESSAGE value="smarter caching and split inputs between data and prices" />
     <MESSAGE value="too accurate to be possible... find the bug!" />
+    <MESSAGE value="simplify, simplify, use pandas dataframe for data" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -686,6 +688,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/%5EGSPC.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/datahandler.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="39" column="46" selection-start="1401" selection-end="1401" vertical-scroll-proportion="0.0">
@@ -695,27 +704,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/%5EGSPC.csv">
+    <entry file="file://$PROJECT_DIR$/nethandler.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
+        <state line="46" column="51" selection-start="1558" selection-end="1558" vertical-scroll-proportion="0.0">
+          <folding>
+            <element signature="e#0#46#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="31" column="17" selection-start="593" selection-end="593" vertical-scroll-proportion="0.0">
+        <state line="34" column="0" selection-start="638" selection-end="638" vertical-scroll-proportion="0.81128407">
           <folding>
             <element signature="e#0#24#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/nethandler.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="44" selection-start="1926" selection-end="1926" vertical-scroll-proportion="1.1750972">
-          <folding>
-            <element signature="e#0#46#0" expanded="true" />
           </folding>
         </state>
       </provider>

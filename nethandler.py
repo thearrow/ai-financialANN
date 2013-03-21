@@ -26,11 +26,13 @@ class NetHandler():
         n.addModule(BiasUnit(name="bias"))
         n.addInputModule(LinearLayer(self.INS, name="in"))
         n.addModule(TanhLayer(self.HIDDEN, name="h1"))
+        n.addModule(TanhLayer(self.HIDDEN, name="h2"))
         n.addOutputModule(TanhLayer(self.OUTS, name="out"))
 
         n.addConnection(FullConnection(n['bias'], n['in']))
         n.addConnection(FullConnection(n['in'], n['h1']))
-        n.addConnection(FullConnection(n['h1'], n['out']))
+        n.addConnection(FullConnection(n['h1'], n['h2']))
+        n.addConnection(FullConnection(n['h2'], n['out']))
         n.sortModules()
         n = n.convertToFastNetwork()
         n.randomize()
@@ -53,7 +55,6 @@ class NetHandler():
     def get_output(self, TRAINING, TESTING):
         outputs = []
         end_index = TRAINING + TESTING
-        print end_index
         for i in range(TRAINING, end_index):
             ins = self.indata.ix[i].values
             outputs.extend(self.net.activate(np.array(ins)))
