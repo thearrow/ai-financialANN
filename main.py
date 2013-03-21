@@ -27,6 +27,17 @@ sp_net.create_training_data(sp500, TRAINING)
 train_errors, val_errors = sp_net.train(LRATE, MOMENTUM, ITERATIONS)
 
 out_ser = sp_net.get_output(TRAINING, TESTING)
+
+print sp_net.change_tomorrow(TRAINING + TESTING - 1)
+
+correct = 0
+for i in range(1, len(out_ser)):
+    actual = sp500.data.ix[out_ser.index, 0].diff()[i]
+    predicted = out_ser.diff(1)[i]
+    if (actual > 0 and predicted > 0) or (actual < 0 and predicted < 0):
+        correct += 1
+print "%.2f" % (float(correct) / float(len(out_ser) - 1) * 100.0),"% Accuracy"
+
 pp.figure(0)
 sp500.data.ix[:, 0].plot(style='b-')
 out_ser.plot(style='r-')
@@ -36,6 +47,8 @@ pp.figure(1)
 pp.plot(train_errors)
 pp.plot(val_errors)
 pp.show(1)
+
+
 
 #NASDAQ COMPOSITE INDEX
 #nasdaq = dh.DataHandler()

@@ -2,6 +2,7 @@ from pybrain.datasets import SupervisedDataSet
 from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure import LinearLayer, FullConnection, FeedForwardNetwork, BiasUnit, TanhLayer
 import pandas as pan
+from pandas.tseries.offsets import *
 import datahandler as dh
 import numpy as np
 
@@ -59,3 +60,19 @@ class NetHandler():
             ins = self.indata.ix[i].values
             outputs.extend(self.net.activate(np.array(ins)))
         return pan.Series(outputs, self.indata.index[TRAINING:end_index])
+
+    def change_tomorrow(self, location):
+        ins = self.indata.ix[location].values
+        output = self.net.activate(np.array(ins))
+        todaysprice = self.indata.ix[location].values[0]
+        tomorrprice = output[0]
+        incdec = ""
+
+        incdec += "On (%s) the market will " % (self.indata.index[location] + BDay()).to_datetime().strftime("%a, %b %d, %Y")
+        if tomorrprice - todaysprice > 0:
+            incdec += "increase."
+        else:
+            incdec += "decrease."
+
+        return incdec
+
