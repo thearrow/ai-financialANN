@@ -4,7 +4,7 @@ from matplotlib import pyplot as pp
 
 #Input Data
 TRAINING = 2200
-TESTING = 603
+TESTING = 604
 startdate = '20020101'  # YYYYMMDD
 
 #Neural Network
@@ -31,7 +31,7 @@ out_ser = sp_net.get_output(TRAINING, TESTING)
 print sp_net.change_tomorrow(TRAINING + TESTING - 1)
 
 correct = 0
-for i in range(1, len(out_ser)):
+for i in xrange(1, len(out_ser)):
     actual = sp500.data.ix[out_ser.index, 0].diff()[i]
     predicted = out_ser.diff(1)[i]
     if (actual > 0 and predicted > 0) or (actual < 0 and predicted < 0):

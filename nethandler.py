@@ -43,7 +43,7 @@ class NetHandler():
         self.handler = handler
         self.indata = handler.data
         self.data = SupervisedDataSet(self.INS, self.OUTS)
-        for i in range(0, (TRAINING - self.OUTS)):
+        for i in xrange(0, (TRAINING - self.OUTS)):
             ins = self.indata.ix[i].values
             target = self.indata.ix[i + 1].values[0]
             self.data.addSample(ins, target)
@@ -56,7 +56,7 @@ class NetHandler():
     def get_output(self, TRAINING, TESTING):
         outputs = []
         end_index = TRAINING + TESTING
-        for i in range(TRAINING, end_index):
+        for i in xrange(TRAINING, end_index):
             ins = self.indata.ix[i].values
             outputs.extend(self.net.activate(np.array(ins)))
         return pan.Series(outputs, self.indata.index[TRAINING:end_index])
