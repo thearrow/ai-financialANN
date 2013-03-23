@@ -27,14 +27,11 @@ class DataHandler():
             self.data = data
         else:
             data = web.get_data_yahoo(self.ticker, self.startdate, self.enddate)
-            data['1d-change'] = data['Adj Close'].pct_change(1)
-            data['5d-change'] = data['Adj Close'].pct_change(5)
-            data['10-mov-avg'] = pan.ewma(data['Adj Close'], com=4.5)
-            data['20-mov-avg'] = pan.ewma(data['Adj Close'], com=9.5)
-            #remove rows used to calculate initial moving averages
-            data = data[20:]
+            data['1change'] = data['Adj Close'].diff(1)
             #remove unused columns
-            data = data[['Adj Close', '1d-change', '5d-change', '10-mov-avg', '20-mov-avg']]
+            data = data[['1change']]
+            #remove rows with nan
+            data = data[10:]
             #preprocess data
             data = data.apply(preprocessing.scale)
             data = data.apply(self.scale_vals)
@@ -42,11 +39,16 @@ class DataHandler():
             self.data = data
 
     def scale_vals(self, vals):
-        #scale to {-1,1}
+        #scale to {-0.8,0.8}
         self.vals_max = np.max(vals)
         self.vals_min = np.min(vals)
-        scale = 2 / (self.vals_max - self.vals_min)
+        scale = 1.6 / (self.vals_max - self.vals_min)
         outs = []
         for val in vals:
-            outs.append(scale * val)
+            outs.append((scale * (val - self.vals_min)) - 0.8)
+
+        mean = np.mean(outs)
+        for i, val in enumerate(outs):
+            outs[i] = val - mean
+
         return np.array(outs)

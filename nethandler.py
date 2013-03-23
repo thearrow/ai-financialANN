@@ -1,6 +1,6 @@
-from pybrain.datasets import SupervisedDataSet
-from pybrain.supervised.trainers import BackpropTrainer
-from pybrain.structure import LinearLayer, FullConnection, FeedForwardNetwork, BiasUnit, TanhLayer
+from pybrain.datasets import SequentialDataSet
+from pybrain.supervised.trainers import BackpropTrainer, RPropMinusTrainer
+from pybrain.structure import *
 import pandas as pan
 from pandas.tseries.offsets import *
 import datahandler as dh
@@ -23,53 +23,63 @@ class NetHandler():
         self.assemble_network()
 
     def assemble_network(self):
-        n = FeedForwardNetwork()
-        n.addModule(BiasUnit(name="bias"))
+        n = RecurrentNetwork()
         n.addInputModule(LinearLayer(self.INS, name="in"))
-        n.addModule(TanhLayer(self.HIDDEN, name="h1"))
-        n.addModule(TanhLayer(self.HIDDEN, name="h2"))
+        n.addModule(LSTMLayer(self.HIDDEN, name="hidden"))
         n.addOutputModule(TanhLayer(self.OUTS, name="out"))
+        n.addModule(BiasUnit(name="outbias"))
+        n.addModule(BiasUnit(name="hidbias"))
 
-        n.addConnection(FullConnection(n['bias'], n['in']))
-        n.addConnection(FullConnection(n['in'], n['h1']))
-        n.addConnection(FullConnection(n['h1'], n['h2']))
-        n.addConnection(FullConnection(n['h2'], n['out']))
+        n.addConnection(FullConnection(n['in'], n['hidden']))
+        n.addRecurrentConnection(FullConnection(n['hidden'], n['hidden']))
+        n.addConnection(FullConnection(n['hidden'], n['out']))
+        n.addConnection(FullConnection(n['hidbias'], n['hidden']))
+        n.addConnection(FullConnection(n['outbias'], n['out']))
         n.sortModules()
-        n = n.convertToFastNetwork()
         n.randomize()
         self.net = n
 
     def create_training_data(self, handler, TRAINING):
         self.handler = handler
         self.indata = handler.data
-        self.data = SupervisedDataSet(self.INS, self.OUTS)
-        for i in xrange(0, (TRAINING - self.OUTS)):
-            ins = self.indata.ix[i].values
+        self.data = SequentialDataSet(self.INS, self.OUTS)
+        for i in xrange(0, TRAINING):
+            self.data.newSequence()
+            ins = self.indata.ix[i].values[0]
             target = self.indata.ix[i + 1].values[0]
-            self.data.addSample(ins, target)
+            self.data.appendLinked(ins, target)
 
     def train(self, LRATE, MOMENTUM, ITERATIONS):
-        trainer = BackpropTrainer(self.net, self.data, learningrate=LRATE, momentum=MOMENTUM, weightdecay=0.0001)
+        trainer = BackpropTrainer(module=self.net, dataset=self.data, learningrate=LRATE,
+                                  momentum=MOMENTUM, weightdecay=0.0001, verbose=True)
+        #trainer = RPropMinusTrainer(self.net, dataset=self.data, verbose=True)
         print "Training..."
-        return trainer.trainUntilConvergence(maxEpochs=ITERATIONS)
+        for _ in xrange(ITERATIONS):
+            trainer.trainEpochs(1)
+        #return trainer.trainUntilConvergence(maxEpochs=ITERATIONS)
 
     def get_output(self, TRAINING, TESTING):
         outputs = []
+        start_index = TRAINING
         end_index = TRAINING + TESTING
-        for i in xrange(TRAINING, end_index):
+        last_training_sample = self.data.getLength()-1
+        print self.data.getSample(last_training_sample), self.indata.ix[start_index].values
+        for i in xrange(start_index, end_index):
             ins = self.indata.ix[i].values
-            outputs.extend(self.net.activate(np.array(ins)))
-        return pan.Series(outputs, self.indata.index[TRAINING:end_index])
+            outs = self.net.activate(np.array(ins))
+            outputs.extend(outs)
+        index = self.indata.index[start_index:end_index] + (self.OUTS * BDay())
+        return pan.Series(outputs, index)
 
-    def change_tomorrow(self, location):
-        ins = self.indata.ix[location].values
+    def change_tomorrow(self):
+        index = len(self.indata) - 1
+        ins = self.indata.ix[index].values
         output = self.net.activate(np.array(ins))
-        todaysprice = self.indata.ix[location].values[0]
-        tomorrprice = output[0]
+        tomorchange = output[0]
         incdec = ""
 
-        incdec += "On (%s) the market will " % (self.indata.index[location] + BDay()).to_datetime().strftime("%a, %b %d, %Y")
-        if tomorrprice - todaysprice > 0:
+        incdec += "On %s the market will " % (self.indata.index[index] + BDay()).to_datetime().strftime("%a, %b %d, %Y")
+        if tomorchange > 0:
             incdec += "increase."
         else:
             incdec += "decrease."
