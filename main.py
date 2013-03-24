@@ -13,9 +13,9 @@ HIDDEN = 10
 OUTPUT = 1
 
 #Training
-ITERATIONS = 20
-LRATE = 0.2
-MOMENTUM = 0.9
+ITERATIONS = 30
+LRATE = 0.5
+MOMENTUM = 0.6
 
 
 #S&P 500
@@ -24,8 +24,8 @@ sp500.load_index("%5EGSPC", startdate)
 
 sp_net = nh.NetHandler(INPUT, HIDDEN, OUTPUT)
 sp_net.create_training_data(sp500, TRAINING)
-# train_errors, val_errors = sp_net.train(LRATE, MOMENTUM, ITERATIONS)
-sp_net.train(LRATE, MOMENTUM, ITERATIONS)
+train_errors, val_errors = sp_net.train(LRATE, MOMENTUM, ITERATIONS)
+#sp_net.train(LRATE, MOMENTUM, ITERATIONS)
 
 out_ser = sp_net.get_output(TRAINING, TESTING)
 
@@ -43,12 +43,11 @@ pp.figure(0)
 sp500.data.ix[:, 0].plot(style='bo-')
 out_ser.plot(style='ro-')
 pp.axhline(0, color='black')
-pp.show()
 
-# pp.figure(1)
-# pp.plot(train_errors)
-# pp.plot(val_errors)
-# pp.show(1)
+pp.figure(1)
+pp.plot(train_errors)
+pp.plot(val_errors)
+pp.show()
 
 
 

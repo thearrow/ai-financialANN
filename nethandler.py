@@ -15,6 +15,7 @@ class NetHandler():
     INS = 0
     HIDDEN = 0
     OUTS = 0
+    initialization_periods = 50
 
     def __init__(self, INS, HIDDEN, OUT):
         self.INS = INS
@@ -33,8 +34,8 @@ class NetHandler():
         n.addConnection(FullConnection(n['in'], n['hidden']))
         n.addRecurrentConnection(FullConnection(n['hidden'], n['hidden']))
         n.addConnection(FullConnection(n['hidden'], n['out']))
-        #n.addConnection(FullConnection(n['hidbias'], n['hidden']))
-        #n.addConnection(FullConnection(n['outbias'], n['out']))
+        n.addConnection(FullConnection(n['hidbias'], n['hidden']))
+        n.addConnection(FullConnection(n['outbias'], n['out']))
         n.sortModules()
         n.randomize()
         self.net = n
@@ -43,7 +44,7 @@ class NetHandler():
         self.handler = handler
         self.indata = handler.data
         self.data = SequentialDataSet(self.INS, self.OUTS)
-        for i in xrange(20, TRAINING):
+        for i in xrange(self.initialization_periods, TRAINING):
             self.data.newSequence()
             ins = self.indata.ix[i].values
             target = self.indata.ix[i + 1].values[0]
@@ -51,13 +52,13 @@ class NetHandler():
 
     def train(self, LRATE, MOMENTUM, ITERATIONS):
         trainer = BackpropTrainer(module=self.net, dataset=self.data, learningrate=LRATE,
-                                  momentum=MOMENTUM, weightdecay=0.0001, verbose=True)
-        for i in xrange(0, 20):
+                                  momentum=MOMENTUM, lrdecay=0.9999, verbose=True)
+        for i in xrange(0, self.initialization_periods):
             self.net.activate(self.indata.ix[i].values)
         print "Training..."
-        for _ in xrange(ITERATIONS):
-            trainer.trainEpochs(1)
-        #return trainer.trainUntilConvergence(maxEpochs=ITERATIONS)
+        # for _ in xrange(ITERATIONS):
+        #     trainer.train()
+        return trainer.trainUntilConvergence(maxEpochs=ITERATIONS)
 
     def get_output(self, TRAINING, TESTING):
         outputs = []
