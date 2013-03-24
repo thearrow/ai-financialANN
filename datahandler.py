@@ -12,8 +12,6 @@ class DataHandler():
     startdate = ''
     enddate = ''
     data = []
-    vals_min = 0
-    vals_max = 0
 
     #fetch financial data from file or yahoo API
     def load_index(self, ticker, startdate):
@@ -41,7 +39,8 @@ class DataHandler():
             data.to_csv(self.filename)
             self.data = data
 
-    def scale_vals(self, vals):
+    @staticmethod
+    def scale_vals(vals):
         #log transform to reduce dynamic range and outliers
         outs = []
         for val in vals:
@@ -51,11 +50,11 @@ class DataHandler():
                 outs.append(-np.log(np.abs(val) + 1))
 
         #scale to {-0.8,0.8}
-        self.vals_max = np.max(outs)
-        self.vals_min = np.min(outs)
-        scale = 1.6 / (self.vals_max - self.vals_min)
+        vals_max = np.max(outs)
+        vals_min = np.min(outs)
+        scale = 1.6 / (vals_max - vals_min)
         for i, val in enumerate(outs):
-            outs[i] = (scale * (val - self.vals_min)) - 0.8
+            outs[i] = (scale * (val - vals_min)) - 0.8
 
         #mean to 0
         mean = np.mean(outs)

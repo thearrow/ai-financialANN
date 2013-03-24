@@ -9,13 +9,13 @@ startdate = '20020101'  # YYYYMMDD
 
 #Neural Network
 INPUT = 5
-HIDDEN = 10
+HIDDEN = 15
 OUTPUT = 1
 
 #Training
-ITERATIONS = 20
+ITERATIONS = 50
 LRATE = 0.5
-MOMENTUM = 0.9
+MOMENTUM = 0.7
 
 
 #S&P 500
@@ -25,9 +25,11 @@ sp500.load_index("%5EGSPC", startdate)
 sp_net = nh.NetHandler(INPUT, HIDDEN, OUTPUT)
 sp_net.create_training_data(sp500, TRAINING)
 train_errors, val_errors = sp_net.train(LRATE, MOMENTUM, ITERATIONS)
-#sp_net.train(LRATE, MOMENTUM, ITERATIONS)
 
 out_ser = sp_net.get_output(TRAINING, TESTING)
+scaled_out_vals = sp500.scale_vals(out_ser.values)
+#out_ser.replace(out_ser.values, value=scaled_out_vals, inplace=True)
+#print out_ser.head(20)
 
 print sp_net.change_tomorrow()
 
@@ -37,7 +39,7 @@ for i in xrange(1, len(out_ser)):
     predicted = out_ser[i]
     if (actual > 0 and predicted > 0) or (actual < 0 and predicted < 0):
         correct += 1
-print "%.2f" % (float(correct) / float(len(out_ser) - 1) * 100.0),"% Accuracy"
+print "%.2f" % (float(correct) / float(len(out_ser) - 1) * 100.0),"% Direction Accuracy"
 
 pp.figure(0)
 sp500.data.ix[:, 0].plot(style='bo-')

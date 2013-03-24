@@ -21,13 +21,14 @@ class NetHandler():
         self.INS = INS
         self.HIDDEN = HIDDEN
         self.OUTS = OUT
-        self.assemble_network()
+        self.assemble_rn()
+        #self.assemble_ffn()
 
-    def assemble_network(self):
+    def assemble_rn(self):
         n = RecurrentNetwork()
         n.addInputModule(LinearLayer(self.INS, name="in"))
         n.addModule(LSTMLayer(self.HIDDEN, name="hidden"))
-        n.addOutputModule(TanhLayer(self.OUTS, name="out"))
+        n.addOutputModule(LinearLayer(self.OUTS, name="out"))
         n.addModule(BiasUnit(name="outbias"))
         n.addModule(BiasUnit(name="hidbias"))
 
@@ -36,6 +37,22 @@ class NetHandler():
         n.addConnection(FullConnection(n['hidden'], n['out']))
         n.addConnection(FullConnection(n['hidbias'], n['hidden']))
         n.addConnection(FullConnection(n['outbias'], n['out']))
+        n.sortModules()
+        n.randomize()
+        self.net = n
+
+    def assemble_ffn(self):
+        n = FeedForwardNetwork()
+        n.addInputModule(LinearLayer(self.INS, name="in"))
+        n.addModule(TanhLayer(self.HIDDEN, name="hidden"))
+        n.addOutputModule(TanhLayer(self.OUTS, name="out"))
+        n.addModule(BiasUnit(name="outbias"))
+        n.addModule(BiasUnit(name="hidbias"))
+
+        n.addConnection(FullConnection(n['in'], n['hidden']))
+        n.addConnection(FullConnection(n['hidden'], n['out']))
+        #n.addConnection(FullConnection(n['hidbias'], n['hidden']))
+        #n.addConnection(FullConnection(n['outbias'], n['out']))
         n.sortModules()
         n.randomize()
         self.net = n
