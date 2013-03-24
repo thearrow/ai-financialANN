@@ -3,7 +3,6 @@ import pandas as pan
 import pandas.io.data as web
 import numpy as np
 import datetime
-from sklearn import preprocessing
 
 
 class DataHandler():
@@ -30,23 +29,35 @@ class DataHandler():
             data['1change'] = data['Adj Close'].diff(1)
             #remove unused columns
             data = data[['1change']]
+            data['1lag'] = data['1change'].shift(1)
+            data['2lag'] = data['1change'].shift(2)
+            data['3lag'] = data['1change'].shift(3)
+            data['4lag'] = data['1change'].shift(4)
             #remove rows with nan
             data = data[10:]
             #preprocess data
-            data = data.apply(preprocessing.scale)
             data = data.apply(self.scale_vals)
+            print data.head(10)
             data.to_csv(self.filename)
             self.data = data
 
     def scale_vals(self, vals):
-        #scale to {-0.8,0.8}
-        self.vals_max = np.max(vals)
-        self.vals_min = np.min(vals)
-        scale = 1.6 / (self.vals_max - self.vals_min)
+        #log transform to reduce dynamic range and outliers
         outs = []
         for val in vals:
-            outs.append((scale * (val - self.vals_min)) - 0.8)
+            if val >= 0:
+                outs.append(np.log(np.abs(val) + 1))
+            else:
+                outs.append(-np.log(np.abs(val) + 1))
 
+        #scale to {-0.8,0.8}
+        self.vals_max = np.max(outs)
+        self.vals_min = np.min(outs)
+        scale = 1.6 / (self.vals_max - self.vals_min)
+        for i, val in enumerate(outs):
+            outs[i] = (scale * (val - self.vals_min)) - 0.8
+
+        #mean to 0
         mean = np.mean(outs)
         for i, val in enumerate(outs):
             outs[i] = val - mean

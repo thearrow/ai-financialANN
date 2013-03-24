@@ -4,18 +4,18 @@ from matplotlib import pyplot as pp
 
 #Input Data
 TRAINING = 2200
-TESTING = 614
+TESTING = 615
 startdate = '20020101'  # YYYYMMDD
 
 #Neural Network
-INPUT = 1
-HIDDEN = 20
+INPUT = 5
+HIDDEN = 10
 OUTPUT = 1
 
 #Training
-ITERATIONS = 10
-LRATE = 0.5
-MOMENTUM = 0.2
+ITERATIONS = 20
+LRATE = 0.2
+MOMENTUM = 0.9
 
 
 #S&P 500
@@ -40,8 +40,9 @@ for i in xrange(1, len(out_ser)):
 print "%.2f" % (float(correct) / float(len(out_ser) - 1) * 100.0),"% Accuracy"
 
 pp.figure(0)
-sp500.data.ix[:, 0].plot(style='b-')
-out_ser.plot(style='r-')
+sp500.data.ix[:, 0].plot(style='bo-')
+out_ser.plot(style='ro-')
+pp.axhline(0, color='black')
 pp.show()
 
 # pp.figure(1)

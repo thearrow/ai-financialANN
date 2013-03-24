@@ -1,5 +1,5 @@
 from pybrain.datasets import SequentialDataSet
-from pybrain.supervised.trainers import BackpropTrainer, RPropMinusTrainer
+from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure import *
 import pandas as pan
 from pandas.tseries.offsets import *
@@ -33,8 +33,8 @@ class NetHandler():
         n.addConnection(FullConnection(n['in'], n['hidden']))
         n.addRecurrentConnection(FullConnection(n['hidden'], n['hidden']))
         n.addConnection(FullConnection(n['hidden'], n['out']))
-        n.addConnection(FullConnection(n['hidbias'], n['hidden']))
-        n.addConnection(FullConnection(n['outbias'], n['out']))
+        #n.addConnection(FullConnection(n['hidbias'], n['hidden']))
+        #n.addConnection(FullConnection(n['outbias'], n['out']))
         n.sortModules()
         n.randomize()
         self.net = n
@@ -43,16 +43,17 @@ class NetHandler():
         self.handler = handler
         self.indata = handler.data
         self.data = SequentialDataSet(self.INS, self.OUTS)
-        for i in xrange(0, TRAINING):
+        for i in xrange(20, TRAINING):
             self.data.newSequence()
-            ins = self.indata.ix[i].values[0]
+            ins = self.indata.ix[i].values
             target = self.indata.ix[i + 1].values[0]
             self.data.appendLinked(ins, target)
 
     def train(self, LRATE, MOMENTUM, ITERATIONS):
         trainer = BackpropTrainer(module=self.net, dataset=self.data, learningrate=LRATE,
                                   momentum=MOMENTUM, weightdecay=0.0001, verbose=True)
-        #trainer = RPropMinusTrainer(self.net, dataset=self.data, verbose=True)
+        for i in xrange(0, 20):
+            self.net.activate(self.indata.ix[i].values)
         print "Training..."
         for _ in xrange(ITERATIONS):
             trainer.trainEpochs(1)
@@ -62,8 +63,6 @@ class NetHandler():
         outputs = []
         start_index = TRAINING
         end_index = TRAINING + TESTING
-        last_training_sample = self.data.getLength()-1
-        print self.data.getSample(last_training_sample), self.indata.ix[start_index].values
         for i in xrange(start_index, end_index):
             ins = self.indata.ix[i].values
             outs = self.net.activate(np.array(ins))
