@@ -28,7 +28,7 @@ class NetHandler():
         n = RecurrentNetwork()
         n.addInputModule(LinearLayer(self.INS, name="in"))
         n.addModule(LSTMLayer(self.HIDDEN, name="hidden"))
-        n.addOutputModule(LinearLayer(self.OUTS, name="out"))
+        n.addOutputModule(TanhLayer(self.OUTS, name="out"))
         n.addModule(BiasUnit(name="outbias"))
         n.addModule(BiasUnit(name="hidbias"))
 

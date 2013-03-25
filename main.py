@@ -1,10 +1,10 @@
 # from numbapro import autojit
-import matplotlib
-matplotlib.use('TkAgg')
+#import matplotlib
+#matplotlib.use('TkAgg')
 import datahandler as dh
 import nethandler as nh
 from matplotlib import pyplot as pp
-from datahandler import scale_vals
+#from datahandler import preprocess
 
 #Input Data
 TRAINING = 2200
@@ -44,7 +44,7 @@ sp_net.create_training_data(sp500, TRAINING)
 train_errors, val_errors = sp_net.train(LRATE, MOMENTUM, ITERATIONS)
 
 out_ser = sp_net.get_output(TRAINING, TESTING)
-#scaled_out_vals = scale_vals(out_ser.values)
+#scaled_out_vals = preprocess(out_ser.values)
 #out_ser.replace(out_ser.values, value=scaled_out_vals, inplace=True)
 #print out_ser.head(20)
 

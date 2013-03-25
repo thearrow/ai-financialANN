@@ -24,30 +24,32 @@ class DataHandler():
             self.data = data
         else:
             data = web.get_data_yahoo(self.ticker, self.startdate, self.enddate)
-            data['1change'] = data['Adj Close'].diff(1)
-            #remove unused columns
+            data['1change'] = data['Adj Close'].pct_change(1)
+            #remove unused columns and nan row
             data = data[['1change']]
+            data = data[1:]
+            #preprocess data
+            data = data.apply(preprocess)
+            #lag data
             data['1lag'] = data['1change'].shift(1)
             data['2lag'] = data['1change'].shift(2)
             data['3lag'] = data['1change'].shift(3)
             data['4lag'] = data['1change'].shift(4)
-            #remove rows with nan
-            data = data[10:]
-            #preprocess data
-            data = data.apply(scale_vals)
+            #remove rows used for change calculation
+            data = data[9:]
             print data.head(10)
             data.to_csv(self.filename)
             self.data = data
 
 
-def scale_vals(vals):
+def preprocess(vals):
     #log transform to reduce dynamic range and outliers
     outs = []
     for val in vals:
         if val >= 0:
-            outs.append(np.log(np.abs(val) + 1))
+            outs.append(np.log(np.abs(val * 100) + 1))
         else:
-            outs.append(-np.log(np.abs(val) + 1))
+            outs.append(-np.log(np.abs(val * 100) + 1))
 
     #scale to {-0.8,0.8}
     vals_max = np.max(outs)
