@@ -34,31 +34,31 @@ class DataHandler():
             #remove rows with nan
             data = data[10:]
             #preprocess data
-            data = data.apply(self.scale_vals)
+            data = data.apply(scale_vals)
             print data.head(10)
             data.to_csv(self.filename)
             self.data = data
 
-    @staticmethod
-    def scale_vals(vals):
-        #log transform to reduce dynamic range and outliers
-        outs = []
-        for val in vals:
-            if val >= 0:
-                outs.append(np.log(np.abs(val) + 1))
-            else:
-                outs.append(-np.log(np.abs(val) + 1))
 
-        #scale to {-0.8,0.8}
-        vals_max = np.max(outs)
-        vals_min = np.min(outs)
-        scale = 1.6 / (vals_max - vals_min)
-        for i, val in enumerate(outs):
-            outs[i] = (scale * (val - vals_min)) - 0.8
+def scale_vals(vals):
+    #log transform to reduce dynamic range and outliers
+    outs = []
+    for val in vals:
+        if val >= 0:
+            outs.append(np.log(np.abs(val) + 1))
+        else:
+            outs.append(-np.log(np.abs(val) + 1))
 
-        #mean to 0
-        mean = np.mean(outs)
-        for i, val in enumerate(outs):
-            outs[i] = val - mean
+    #scale to {-0.8,0.8}
+    vals_max = np.max(outs)
+    vals_min = np.min(outs)
+    scale = 1.6 / (vals_max - vals_min)
+    for i, val in enumerate(outs):
+        outs[i] = (scale * (val - vals_min)) - 0.8
 
-        return np.array(outs)
+    #mean to 0
+    mean = np.mean(outs)
+    for i, val in enumerate(outs):
+        outs[i] = val - mean
+
+    return np.array(outs)
