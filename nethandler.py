@@ -73,8 +73,6 @@ class NetHandler():
         for i in xrange(0, self.initialization_periods):
             self.net.activate(self.indata.ix[i].values)
         print "Training..."
-        # for _ in xrange(ITERATIONS):
-        #     trainer.train()
         return trainer.trainUntilConvergence(maxEpochs=ITERATIONS)
 
     def get_output(self, TRAINING, TESTING):
