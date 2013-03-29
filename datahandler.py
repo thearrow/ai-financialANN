@@ -14,7 +14,7 @@ class DataHandler():
     data = []
 
     #fetch financial data from file or yahoo API
-    def load_index(self, ticker, startdate):
+    def load_index(self, ticker, startdate, threshold):
         self.ticker = ticker
         self.filename = "%s.csv" % ticker
         self.startdate = startdate
@@ -28,6 +28,8 @@ class DataHandler():
             #remove unused columns and nan row
             data = data[['1change']]
             data = data[1:]
+            #filter out middle threshold noise
+            data = data[np.logical_or(data['1change'] >= threshold, data['1change'] <= -threshold)]
             #preprocess data
             data = data.apply(preprocess)
             #lag data
@@ -51,12 +53,12 @@ def preprocess(vals):
         else:
             outs.append(-np.log(np.abs(val * 100) + 1))
 
-    #scale to {-0.8,0.8}
+    #scale to {-0.9,0.9}
     vals_max = np.max(outs)
     vals_min = np.min(outs)
-    scale = 1.6 / (vals_max - vals_min)
+    scale = 1.8 / (vals_max - vals_min)
     for i, val in enumerate(outs):
-        outs[i] = (scale * (val - vals_min)) - 0.8
+        outs[i] = (scale * (val - vals_min)) - 0.9
 
     #mean to 0
     mean = np.mean(outs)

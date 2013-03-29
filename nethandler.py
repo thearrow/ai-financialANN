@@ -3,13 +3,11 @@ from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure import *
 import pandas as pan
 from pandas.tseries.offsets import *
-import datahandler as dh
 import numpy as np
 
 
 class NetHandler():
     net = ''
-    handler = dh.DataHandler()
     indata = ''
     data = ''
     INS = 0
@@ -21,14 +19,14 @@ class NetHandler():
         self.INS = INS
         self.HIDDEN = HIDDEN
         self.OUTS = OUT
-        self.assemble_rn()
-        #self.assemble_ffn()
+        #self.assemble_rn()
+        self.assemble_ffn()
 
     def assemble_rn(self):
         n = RecurrentNetwork()
         n.addInputModule(LinearLayer(self.INS, name="in"))
         n.addModule(LSTMLayer(self.HIDDEN, name="hidden"))
-        n.addOutputModule(TanhLayer(self.OUTS, name="out"))
+        n.addOutputModule(LinearLayer(self.OUTS, name="out"))
         n.addModule(BiasUnit(name="outbias"))
         n.addModule(BiasUnit(name="hidbias"))
 
@@ -51,17 +49,17 @@ class NetHandler():
 
         n.addConnection(FullConnection(n['in'], n['hidden']))
         n.addConnection(FullConnection(n['hidden'], n['out']))
-        #n.addConnection(FullConnection(n['hidbias'], n['hidden']))
-        #n.addConnection(FullConnection(n['outbias'], n['out']))
+        n.addConnection(FullConnection(n['hidbias'], n['hidden']))
+        n.addConnection(FullConnection(n['outbias'], n['out']))
         n.sortModules()
         n.randomize()
         self.net = n
 
     def create_training_data(self, handler, TRAINING):
-        self.handler = handler
         self.indata = handler.data
+        end_index = int(np.floor(len(self.indata) * TRAINING))
         self.data = SequentialDataSet(self.INS, self.OUTS)
-        for i in xrange(self.initialization_periods, TRAINING):
+        for i in xrange(self.initialization_periods, end_index):
             self.data.newSequence()
             ins = self.indata.ix[i].values
             target = self.indata.ix[i + 1].values[0]
@@ -75,10 +73,10 @@ class NetHandler():
         print "Training..."
         return trainer.trainUntilConvergence(maxEpochs=ITERATIONS)
 
-    def get_output(self, TRAINING, TESTING):
+    def get_output(self, TRAINING):
         outputs = []
-        start_index = TRAINING
-        end_index = TRAINING + TESTING
+        start_index = int(np.floor(len(self.indata) * TRAINING))
+        end_index = len(self.indata)
         for i in xrange(start_index, end_index):
             ins = self.indata.ix[i].values
             outs = self.net.activate(np.array(ins))

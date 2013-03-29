@@ -1,10 +1,12 @@
+import matplotlib
+matplotlib.use("Qt4Agg")
 import datahandler as dh
 import nethandler as nh
 from matplotlib import pyplot as pp
 
 #Input Data
-TRAINING = 2200
-TESTING = 615
+TRAINING_PERCENT = 0.80
+DATA_THRESHOLD = 0.002
 startdate = '20020101'  # YYYYMMDD
 
 #Neural Network
@@ -13,29 +15,21 @@ HIDDEN = 5
 OUTPUT = 1
 
 #Training
-ITERATIONS = 10
-LRATE = 0.4
-MOMENTUM = 0.7
+ITERATIONS = 20
+LRATE = 0.5
+MOMENTUM = 0.6
 
 #S&P 500
 sp500 = dh.DataHandler()
-sp500.load_index("%5EGSPC", startdate)
+sp500.load_index("%5EGSPC", startdate, DATA_THRESHOLD)
 
 sp_net = nh.NetHandler(INPUT, HIDDEN, OUTPUT)
-sp_net.create_training_data(sp500, TRAINING)
+sp_net.create_training_data(sp500, TRAINING_PERCENT)
 train_errors, val_errors = sp_net.train(LRATE, MOMENTUM, ITERATIONS)
 
-out_ser = sp_net.get_output(TRAINING, TESTING)
+out_ser = sp_net.get_output(TRAINING_PERCENT)
 
 print sp_net.change_tomorrow()
-
-correct = 0
-for i in xrange(1, len(out_ser)):
-    actual = sp500.data.ix[out_ser.index, 0][i]
-    predicted = out_ser[i]
-    if (actual > 0 and predicted > 0) or (actual < 0 and predicted < 0):
-        correct += 1
-print "%.2f" % (float(correct) / float(len(out_ser) - 1) * 100.0),"% Direction Accuracy"
 
 pp.figure(0)
 sp500.data.ix[:, 0].plot(style='bo-')
