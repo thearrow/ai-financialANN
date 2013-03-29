@@ -19,8 +19,8 @@ class NetHandler():
         self.INS = INS
         self.HIDDEN = HIDDEN
         self.OUTS = OUT
-        #self.assemble_rn()
-        self.assemble_ffn()
+        self.assemble_rn()
+        #self.assemble_ffn()
 
     def assemble_rn(self):
         n = RecurrentNetwork()

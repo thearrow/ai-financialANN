@@ -3,45 +3,57 @@ import pandas as pan
 import pandas.io.data as web
 import numpy as np
 import datetime
+from pandas.tools.merge import merge
 
 
 class DataHandler():
     #Financial Data
+    sp = ''
     filename = ''
-    ticker = ''
+    tickers = ''
     startdate = ''
     enddate = ''
-    data = []
+    data = pan.DataFrame()
 
     #fetch financial data from file or yahoo API
-    def load_index(self, ticker, startdate, threshold):
-        self.ticker = ticker
-        self.filename = "%s.csv" % ticker
+    def load_indices(self, tickers, startdate, threshold):
+        self.tickers = tickers
+        self.filename = "DATA.csv"
         self.startdate = startdate
         self.enddate = datetime.date.today().strftime("%Y%m%d")
         if os.path.isfile(self.filename):
             data = pan.DataFrame.from_csv(self.filename)
             self.data = data
         else:
-            data = web.get_data_yahoo(self.ticker, self.startdate, self.enddate)
-            data['1change'] = data['Adj Close'].pct_change(1)
-            #remove unused columns and nan row
-            data = data[['1change']]
-            data = data[1:]
-            #filter out middle threshold noise
-            data = data[np.logical_or(data['1change'] >= threshold, data['1change'] <= -threshold)]
-            #preprocess data
-            data = data.apply(preprocess)
-            #lag data
-            data['1lag'] = data['1change'].shift(1)
-            data['2lag'] = data['1change'].shift(2)
-            data['3lag'] = data['1change'].shift(3)
-            data['4lag'] = data['1change'].shift(4)
-            #remove rows used for change calculation
-            data = data[9:]
-            print data.head(10)
-            data.to_csv(self.filename)
-            self.data = data
+            for ticker in tickers:
+                data = web.get_data_yahoo(ticker, self.startdate, self.enddate)
+                index = ticker + '1change'
+                data[index] = data['Adj Close'].pct_change(1)
+                #remove unused columns and nan row
+                data = data[[index]]
+                data = data[1:]
+                #filter out middle threshold noise
+                #data = data[np.logical_or(data[index] >= threshold, data[index] <= -threshold)]
+                #preprocess data
+                data = data.apply(preprocess)
+                #lag data
+                lag1 = ticker + '1lag'
+                lag2 = ticker + '2lag'
+                lag3 = ticker + '3lag'
+                lag4 = ticker + '4lag'
+                data[lag1] = data[index].shift(1)
+                data[lag2] = data[index].shift(2)
+                data[lag3] = data[index].shift(3)
+                data[lag4] = data[index].shift(4)
+                #remove rows used for change calculation
+                data = data[9:]
+                print data.head(10)
+                if ticker == "%5EGSPC":
+                    self.sp = data
+                else:
+                    self.sp = merge(self.sp, data, left_index=True, right_index=True)
+            self.data = self.sp
+            self.data.to_csv(self.filename)
 
 
 def preprocess(vals):
