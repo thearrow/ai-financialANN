@@ -7,13 +7,13 @@ from matplotlib import pyplot as pp
 #Input Data
 TRAINING_PERCENT = 0.90
 DATA_THRESHOLD = 0.002
-LAG_DAYS = 2
+LAG_DAYS = 3
 startdate = '20000101'  # YYYYMMDD
-indices = ["%5EGSPC", "%5EIXIC", "%5EFVX", "%5EXMI", "%5ENYA"]
+indices = ["%5EGSPC", "%5EIXIC", "%5EFVX", "%5ETYX", "%5EXMI", "%5ENYA"]
 
 #Neural Network
 INPUT = len(indices) * (LAG_DAYS+1)
-HIDDEN = 15
+HIDDEN = 12
 OUTPUT = 1
 
 #Training
@@ -30,7 +30,7 @@ sp_net.create_training_data(data, TRAINING_PERCENT)
 train_errors, val_errors = sp_net.train(LRATE, MOMENTUM, ITERATIONS)
 
 out_ser = sp_net.get_output(TRAINING_PERCENT)
-print "Net Topology: %d-%d-%d\n" % (INPUT, HIDDEN, OUTPUT)
+print "Net Topology: %d-%d-%d" % (INPUT, HIDDEN, OUTPUT)
 print sp_net.change_tomorrow()
 
 correct = 0
@@ -55,6 +55,7 @@ data.data.ix[:, (LAG_DAYS+1) * 1].plot(style='g-', alpha='0.5')
 data.data.ix[:, (LAG_DAYS+1) * 2].plot(style='y-', alpha='0.5')
 data.data.ix[:, (LAG_DAYS+1) * 3].plot(style='m-', alpha='0.5')
 data.data.ix[:, (LAG_DAYS+1) * 4].plot(style='c-', alpha='0.5')
+data.data.ix[:, (LAG_DAYS+1) * 5].plot(style='-', color='0.75', alpha='0.5')
 out_ser.plot(style='ro-')
 pp.axhline(0, color='black')
 
