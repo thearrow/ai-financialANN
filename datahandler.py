@@ -16,7 +16,7 @@ class DataHandler():
     data = pan.DataFrame()
 
     #fetch financial data from file or yahoo API
-    def load_indices(self, tickers, startdate, threshold):
+    def load_indices(self, tickers, startdate, threshold, lags):
         self.tickers = tickers
         self.filename = "DATA.csv"
         self.startdate = startdate
@@ -37,16 +37,11 @@ class DataHandler():
                 #preprocess data
                 data = data.apply(preprocess)
                 #lag data
-                lag1 = ticker + '1lag'
-                lag2 = ticker + '2lag'
-                lag3 = ticker + '3lag'
-                lag4 = ticker + '4lag'
-                data[lag1] = data[index].shift(1)
-                data[lag2] = data[index].shift(2)
-                data[lag3] = data[index].shift(3)
-                data[lag4] = data[index].shift(4)
+                for i in range(1, lags + 1):
+                    label = ticker + "%dlag" % i
+                    data[label] = data[index].shift(i)
                 #remove rows used for change calculation
-                data = data[9:]
+                data = data[lags + 1:]
                 print data.head(10)
                 if ticker == "%5EGSPC":
                     self.sp = data

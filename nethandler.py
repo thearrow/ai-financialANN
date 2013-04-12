@@ -67,7 +67,7 @@ class NetHandler():
 
     def train(self, LRATE, MOMENTUM, ITERATIONS):
         trainer = BackpropTrainer(module=self.net, dataset=self.data, learningrate=LRATE,
-                                  momentum=MOMENTUM, lrdecay=0.9999, verbose=True)
+                                  momentum=MOMENTUM, lrdecay=0.99999, verbose=True)
         for i in xrange(0, self.initialization_periods):
             self.net.activate(self.indata.ix[i].values)
         print "Training..."
@@ -91,11 +91,11 @@ class NetHandler():
         tomorchange = output[0]
         incdec = ""
 
-        incdec += "On %s the market will " % (self.indata.index[index] + BDay()).to_datetime().strftime("%a, %b %d, %Y")
+        incdec += "\nOn %s the market will " % (self.indata.index[index] + BDay()).to_datetime().strftime("%a, %b %d, %Y")
         if tomorchange > 0:
-            incdec += "increase."
+            incdec += "increase.\n"
         else:
-            incdec += "decrease."
+            incdec += "decrease.\n"
 
         return incdec
 
