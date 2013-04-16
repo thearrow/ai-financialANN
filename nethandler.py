@@ -1,4 +1,4 @@
-from pybrain.datasets import SequentialDataSet
+from math import floor
 from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure import *
 import pandas as pan
@@ -15,10 +15,11 @@ class NetHandler():
     OUTS = 0
     initialization_periods = 50
 
-    def __init__(self, INS, HIDDEN, OUT):
+    def __init__(self, INS, HIDDEN, OUT, data):
         self.INS = INS
         self.HIDDEN = HIDDEN
         self.OUTS = OUT
+        self.indata = data.dataframe
         self.assemble_rn()
         #self.assemble_ffn()
 
@@ -55,33 +56,21 @@ class NetHandler():
         n.randomize()
         self.net = n
 
-    def create_training_data(self, handler, TRAINING):
-        self.indata = handler.data
-        end_index = int(np.floor(len(self.indata) * TRAINING))
-        self.data = SequentialDataSet(self.INS, self.OUTS)
-        for i in xrange(self.initialization_periods, end_index):
-            self.data.newSequence()
-            ins = self.indata.ix[i].values
-            target = self.indata.ix[i + 1].values[0]
-            self.data.appendLinked(ins, target)
-
-    def train(self, LRATE, MOMENTUM, ITERATIONS):
-        trainer = BackpropTrainer(module=self.net, dataset=self.data, learningrate=LRATE,
+    def train(self, data, LRATE, MOMENTUM, ITERATIONS):
+        trainer = BackpropTrainer(module=self.net, dataset=data, learningrate=LRATE,
                                   momentum=MOMENTUM, lrdecay=0.99999, verbose=True)
         for i in xrange(0, self.initialization_periods):
-            self.net.activate(self.indata.ix[i].values)
+            self.net.activate(data.getSequence(i)[0])
         print "Training..."
         return trainer.trainUntilConvergence(maxEpochs=ITERATIONS)
 
-    def get_output(self, TRAINING):
+    def get_output(self, data, proportion):
         outputs = []
-        start_index = int(np.floor(len(self.indata) * TRAINING))
-        end_index = len(self.indata)
-        for i in xrange(start_index, end_index):
-            ins = self.indata.ix[i].values
-            outs = self.net.activate(np.array(ins))
+        for i in range(0, len(data)):
+            datum = data.getSequence(i)
+            outs = self.net.activate(datum[0])
             outputs.extend(outs)
-        index = self.indata.index[start_index:end_index] + (self.OUTS * BDay())
+        index = self.indata.index[floor(len(self.indata) * proportion) + 1:]
         return pan.Series(outputs, index)
 
     def change_tomorrow(self):

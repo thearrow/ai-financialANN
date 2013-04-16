@@ -4,6 +4,7 @@ import pandas.io.data as web
 import numpy as np
 import datetime
 from pandas.tools.merge import merge
+from pybrain.datasets import SequentialDataSet
 
 
 class DataHandler():
@@ -13,17 +14,18 @@ class DataHandler():
     tickers = ''
     startdate = ''
     enddate = ''
-    data = pan.DataFrame()
+    dataframe = pan.DataFrame()
+    data = ''
 
     #fetch financial data from file or yahoo API
-    def load_indices(self, tickers, startdate, threshold, lags):
+    def load_indices(self, tickers, startdate, lags):
         self.tickers = tickers
         self.filename = "DATA.csv"
         self.startdate = startdate
         self.enddate = datetime.date.today().strftime("%Y%m%d")
         if os.path.isfile(self.filename):
             data = pan.DataFrame.from_csv(self.filename)
-            self.data = data
+            self.dataframe = data
         else:
             for ticker in tickers:
                 data = web.get_data_yahoo(ticker, self.startdate, self.enddate)
@@ -47,8 +49,20 @@ class DataHandler():
                     self.sp = data
                 else:
                     self.sp = merge(self.sp, data, left_index=True, right_index=True)
-            self.data = self.sp
-            self.data.to_csv(self.filename)
+            self.dataframe = self.sp
+            self.dataframe.to_csv(self.filename)
+
+    def create_data(self, inputs, targets):
+        data = SequentialDataSet(inputs, targets)
+        for i in xrange(0, len(self.dataframe) - 1):
+            data.newSequence()
+            ins = self.dataframe.ix[i].values
+            target = self.dataframe.ix[i + 1].values[0]
+            data.appendLinked(ins, target)
+        self.data = data
+
+    def get_datasets(self, proportion):
+        return self.data.splitWithProportion(proportion)
 
 
 def preprocess(vals):
