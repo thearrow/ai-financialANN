@@ -34,8 +34,8 @@ class NetHandler():
         n.addConnection(FullConnection(n['in'], n['hidden']))
         n.addRecurrentConnection(FullConnection(n['hidden'], n['hidden']))
         n.addConnection(FullConnection(n['hidden'], n['out']))
-        n.addConnection(FullConnection(n['hidbias'], n['hidden']))
-        n.addConnection(FullConnection(n['outbias'], n['out']))
+        #n.addConnection(FullConnection(n['hidbias'], n['hidden']))
+        #n.addConnection(FullConnection(n['outbias'], n['out']))
         n.sortModules()
         n.randomize()
         self.net = n
@@ -59,8 +59,8 @@ class NetHandler():
     def train(self, data, LRATE, MOMENTUM, ITERATIONS):
         trainer = BackpropTrainer(module=self.net, dataset=data, learningrate=LRATE,
                                   momentum=MOMENTUM, lrdecay=0.99999, verbose=True)
-        for i in xrange(0, self.initialization_periods):
-            self.net.activate(data.getSequence(i)[0])
+        # for i in xrange(0, self.initialization_periods):
+        #     self.net.activate(data.getSequence(i)[0])
         print "Training..."
         return trainer.trainUntilConvergence(maxEpochs=ITERATIONS)
 
