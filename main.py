@@ -1,5 +1,5 @@
 import matplotlib
-matplotlib.use("Qt4Agg")
+#matplotlib.use("MacOSX")
 import datahandler as dh
 import nethandler as nh
 from matplotlib import pyplot as pp
@@ -51,12 +51,12 @@ print "%.3f%% Directional Accuracy" % (float(correct) / float(total) * 100)
 print "(%d misses)" % misses
 
 pp.figure(0)
-data.dataframe.ix[:, 0].plot(style='bo-', alpha='0.8')
-data.dataframe.ix[:, (LAG_DAYS+1) * 1].plot(style='g-', alpha='0.5')
-data.dataframe.ix[:, (LAG_DAYS+1) * 2].plot(style='y-', alpha='0.5')
-data.dataframe.ix[:, (LAG_DAYS+1) * 3].plot(style='m-', alpha='0.5')
-data.dataframe.ix[:, (LAG_DAYS+1) * 4].plot(style='c-', alpha='0.5')
-data.dataframe.ix[:, (LAG_DAYS+1) * 5].plot(style='-', color='0.75', alpha='0.5')
+data.dataframe.ix[:, 0].plot(style='bo-', alpha=0.8)
+data.dataframe.ix[:, (LAG_DAYS+1) * 1].plot(style='g-', alpha=0.5)
+data.dataframe.ix[:, (LAG_DAYS+1) * 2].plot(style='y-', alpha=0.5)
+data.dataframe.ix[:, (LAG_DAYS+1) * 3].plot(style='m-', alpha=0.5)
+data.dataframe.ix[:, (LAG_DAYS+1) * 4].plot(style='c-', alpha=0.5)
+data.dataframe.ix[:, (LAG_DAYS+1) * 5].plot(style='-', color='0.75', alpha=0.5)
 out_ser.plot(style='ro-')
 pp.axhline(0, color='black')
 
