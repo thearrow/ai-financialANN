@@ -1,10 +1,14 @@
-Recurrent Neural Network for Financial Forecasting
-===============
+Recurrent ANN for Financial Forecasting
+======
 
 - Pulls financial data (historical prices of various indices) from the Yahoo Finance API
 - Constructs a recurrent neural network with an architecture suitable for time-series forecasting
 - Trains the network on that data
 - Displays graphs and output data detailing the results
+
+
+Output
+------
 
 Output graph of %-change in price over time of various indices, with prediction for the S&P500 in red, actual S&P500 in blue:
 ![Output Graph](http://i.imgur.com/sA2g2P7.png "Output Graph")
